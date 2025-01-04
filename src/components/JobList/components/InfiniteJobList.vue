@@ -41,10 +41,6 @@ const handleScroll = (e: Event) => {
     loadMoreJobs()
   }
 }
-
-onMounted(() => {
-  loadMoreJobs()
-})
 </script>
 
 <template>
