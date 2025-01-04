@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Select from '@/components/shared/Select.vue'
+import BaseSelect from '@/components/shared/BaseSelect.vue'
 
 const props = defineProps<{
     sortDirection: string
@@ -36,15 +36,16 @@ const sortDirectionOptions = [
                 </p>
             </div>
             <div class="flex items-center gap-3">
-                <Select
+                <BaseSelect
                     id="sortKey"
                     :modelValue="sortKey"
                     :options="sortKeyOptions"
                     label="Sort by"
                     @update:modelValue="$emit('update:sortKey', $event)"
                 />
-                <Select
+                <BaseSelect
                     id="sortDirection"
+                    select-class="mt-7"
                     :modelValue="sortDirection"
                     :options="sortDirectionOptions"
                     @update:modelValue="$emit('update:sortDirection', $event)"

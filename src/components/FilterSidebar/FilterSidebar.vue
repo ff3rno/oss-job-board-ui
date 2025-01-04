@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import { ExperienceLevel, JobType } from '@/types/job'
 import BaseButton from '@/components/shared/BaseButton.vue'
-import Select from '@/components/shared/Select.vue'
+import BaseSelect from '@/components/shared/BaseSelect.vue'
+import BaseInput from '@/components/shared/BaseInput.vue'
 
 interface JobPosting {
     id: number
@@ -90,84 +91,80 @@ const resetFilters = () => {
     <aside :class="[props.class]">
         <div class="p-6">
             <div class="mb-6">
-                <input
-                    type="text"
-                    :value="searchTerm"
-                    @input="
-                        (e) =>
-                            emit(
-                                'update:searchTerm',
-                                (e.target as HTMLInputElement).value,
-                            )
-                    "
+                <BaseInput
+                    id="search"
+                    :modelValue="searchTerm"
                     placeholder="Search jobs..."
-                    class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    class="w-full"
+                    @update:modelValue="(value: string) => emit('update:searchTerm', value)"
                 />
             </div>
 
             <div class="mb-6">
-                <Select
-                    id="location"
-                    :modelValue="selectedLocation"
-                    :options="locationOptions"
-                    label="Location:"
-                    placeholder="All"
-                    @update:modelValue="emit('update:selectedLocation', $event)"
-                />
+                <div class="flex flex-col gap-2">
+                    <BaseSelect
+                        id="location"
+                        :modelValue="selectedLocation"
+                        :options="locationOptions"
+                        label="Location:"
+                        placeholder="All"
+                        class="w-full"
+                        labelClass="min-w-[120px]"
+                        @update:modelValue="emit('update:selectedLocation', $event)"
+                    />
+                </div>
             </div>
 
             <div class="mb-6">
-                <Select
-                    id="jobType"
-                    :modelValue="selectedJobType"
-                    :options="jobTypeOptions"
-                    label="Job Type:"
-                    placeholder="All"
-                    @update:modelValue="emit('update:selectedJobType', $event as JobType)"
-                />
+                <div class="flex flex-col gap-2">
+                    <BaseSelect
+                        id="jobType"
+                        :modelValue="selectedJobType"
+                        :options="jobTypeOptions"
+                        label="Job Type:"
+                        placeholder="All"
+                        class="w-full"
+                        labelClass="min-w-[120px]"
+                        @update:modelValue="emit('update:selectedJobType', $event as JobType)"
+                    />
+                </div>
             </div>
 
             <div class="mb-6">
-                <Select
-                    id="experience"
-                    :modelValue="selectedExperience"
-                    :options="experienceLevelOptions"
-                    label="Experience Level:"
-                    placeholder="All"
-                    @update:modelValue="emit('update:selectedExperience', $event as ExperienceLevel)"
-                />
+                <div class="flex flex-col gap-2">
+                    <BaseSelect
+                        id="experience"
+                        :modelValue="selectedExperience"
+                        :options="experienceLevelOptions"
+                        label="Experience Level:"
+                        placeholder="All"
+                        class="w-full"
+                        labelClass="min-w-[120px]"
+                        @update:modelValue="emit('update:selectedExperience', $event as ExperienceLevel)"
+                    />
+                </div>
             </div>
 
             <div class="mb-6">
-                <label class="block mb-2 text-gray-700 font-medium">
+                <label class="text-sm font-medium text-gray-700 mb-2 block">
                     Salary Range:
                 </label>
                 <div class="flex items-center gap-2">
-                    <input
+                    <BaseInput
+                        id="minSalary"
                         type="number"
-                        :value="minSalary"
-                        @input="
-                            (e) =>
-                                emit(
-                                    'update:minSalary',
-                                    Number((e.target as HTMLInputElement).value),
-                                )
-                        "
+                        :modelValue="minSalary"
                         placeholder="Min"
-                        class="w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        class="w-1/2"
+                        @update:modelValue="(value: number | null) => emit('update:minSalary', value)"
                     />
-                    <input
+                    <BaseInput
+                        id="maxSalary"
                         type="number"
-                        :value="maxSalary"
-                        @input="
-                            (e) =>
-                                emit(
-                                    'update:maxSalary',
-                                    Number((e.target as HTMLInputElement).value),
-                                )
-                        "
+                        :modelValue="maxSalary"
                         placeholder="Max"
-                        class="w-1/2 p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                        class="w-1/2"
+                        @update:modelValue="(value: number | null) => emit('update:maxSalary', value)"
                     />
                 </div>
             </div>
