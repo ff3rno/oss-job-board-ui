@@ -12,6 +12,9 @@ import CompactIcon from '@/components/shared/BaseIcon/components/CompactIcon.vue
 import ChevronLeftIcon from '@/components/shared/BaseIcon/components/ChevronLeftIcon.vue'
 import ChevronRightIcon from '@/components/shared/BaseIcon/components/ChevronRightIcon.vue'
 import SpinnerIcon from '@/components/shared/BaseIcon/components/SpinnerIcon.vue'
+import CheckCircleIcon from '@/components/shared/BaseIcon/components/CheckCircleIcon.vue'
+import ArrowDownCircleIcon from '@/components/shared/BaseIcon/components/ArrowDownCircleIcon.vue'
+import PreviewIcon from '@/components/shared/BaseIcon/components/PreviewIcon.vue'
 
 export type IconName =
   | 'money'
@@ -26,6 +29,9 @@ export type IconName =
   | 'chevron-left'
   | 'chevron-right'
   | 'spinner'
+  | 'check-circle'
+  | 'arrow-down-circle'
+  | 'preview'
 
 const props = defineProps<{
   name: IconName
@@ -45,6 +51,9 @@ const icons: Record<IconName, Component> = {
   'chevron-left': ChevronLeftIcon,
   'chevron-right': ChevronRightIcon,
   spinner: SpinnerIcon,
+  'check-circle': CheckCircleIcon,
+  'arrow-down-circle': ArrowDownCircleIcon,
+  preview: PreviewIcon,
 }
 </script>
 

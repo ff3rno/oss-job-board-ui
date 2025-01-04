@@ -3,7 +3,7 @@ import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import BaseButton from '@/components/shared/BaseButton.vue'
 import type { JobPosting } from '@/types'
-import JobDetailsCard from '@/components/JobDetails/JobDetailsCard.vue'
+import JobDetailsCard from '@/components/JobDetailsCard.vue'
 import { JobType, ExperienceLevel } from '@/types'
 import BaseIcon, {
   type IconName,
@@ -32,6 +32,7 @@ const formData = ref<JobPosting>({
   skills: [],
   benefits: [],
   featuredAt: undefined,
+  relatedJobIds: [],
 })
 
 const newSkill = ref('')
@@ -54,6 +55,7 @@ const previewJob = computed<JobPosting>(() => ({
   },
   skills: formData.value.skills || [],
   benefits: formData.value.benefits || [],
+  relatedJobIds: [],
 }))
 
 const addSkill = () => {
@@ -161,86 +163,80 @@ const currencyOptions = [
       </BaseButton>
     </div>
 
-    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm p-6">
-      <div class="mb-6 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-          Post a New Job
-        </h1>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="space-y-6">
-          <form
-            @submit.prevent="handleSubmit"
-            class="space-y-6"
-          >
+    <form @submit.prevent="handleSubmit">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
+        <div>
+          <h1 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+            Post a New Job
+          </h1>
+          <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm p-6">
             <div class="space-y-4">
-              <div>
-                <label
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Job Title
-                </label>
-                <BaseInput
-                  v-model="formData.title"
-                  type="text"
-                  required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
-                />
-              </div>
-
-              <div>
-                <label
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Company
-                </label>
-                <BaseInput
-                  v-model="formData.company"
-                  type="text"
-                  required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
-                />
-              </div>
-
-              <div>
-                <label
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Location
-                </label>
-                <BaseInput
-                  v-model="formData.location"
-                  type="text"
-                  required
-                  class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
-                />
-              </div>
-
-              <div>
-                <BaseSelect
-                  v-model="jobType"
-                  :options="jobTypeOptions"
-                  label="Job Type"
-                />
-              </div>
-
-              <div>
-                <BaseSelect
-                  v-model="experienceLevel"
-                  :options="experienceLevelOptions"
-                  label="Experience Level"
-                />
-              </div>
-
-              <div class="grid grid-cols-3 gap-4">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <BaseSelect
-                    v-model="currency"
-                    :options="currencyOptions"
-                    label="Currency"
+                  <label
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Job Title
+                  </label>
+                  <BaseInput
+                    v-model="formData.title"
+                    type="text"
+                    required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
                   />
                 </div>
+
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Company
+                  </label>
+                  <BaseInput
+                    v-model="formData.company"
+                    type="text"
+                    required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  >
+                    Location
+                  </label>
+                  <BaseInput
+                    v-model="formData.location"
+                    type="text"
+                    required
+                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
+                  />
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <BaseSelect
+                    v-model="jobType"
+                    :options="jobTypeOptions"
+                    label="Job Type"
+                  />
+
+                  <BaseSelect
+                    v-model="experienceLevel"
+                    :options="experienceLevelOptions"
+                    label="Experience Level"
+                  />
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <BaseSelect
+                  v-model="currency"
+                  :options="currencyOptions"
+                  label="Currency"
+                />
                 <div>
                   <label
                     class="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -280,117 +276,123 @@ const currencyOptions = [
                   type="textarea"
                   required
                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
-                  :rows="4"
+                  :rows="3"
                 />
               </div>
 
-              <div>
-                <label
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Skills
-                </label>
-                <div class="flex gap-2 mt-1">
-                  <BaseInput
-                    v-model="newSkill"
-                    type="text"
-                    placeholder="Add a skill"
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
-                    @keyup.enter="addSkill"
-                  />
-                  <BaseButton
-                    type="button"
-                    @click="addSkill"
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
-                    Add
-                  </BaseButton>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-2">
-                  <BaseBadge
-                    v-for="skill in formData.skills"
-                    :key="skill"
-                    variant="pill"
-                    class="cursor-pointer"
-                    @click="removeSkill(skill)"
-                  >
-                    {{ skill }}
-                    <BaseIcon
-                      :name="'x' as IconName"
-                      class="ml-1 w-4 h-4"
+                    Skills
+                  </label>
+                  <div class="flex gap-2">
+                    <BaseInput
+                      v-model="newSkill"
+                      type="text"
+                      placeholder="Add a skill"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
+                      @keyup.enter="addSkill"
                     />
-                  </BaseBadge>
+                    <BaseButton
+                      type="button"
+                      @click="addSkill"
+                    >
+                      Add
+                    </BaseButton>
+                  </div>
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    <BaseBadge
+                      v-for="skill in formData.skills"
+                      :key="skill"
+                      variant="pill"
+                      class="cursor-pointer"
+                      @click="removeSkill(skill)"
+                    >
+                      {{ skill }}
+                      <BaseIcon
+                        :name="'x' as IconName"
+                        class="ml-1 w-4 h-4"
+                      />
+                    </BaseBadge>
+                  </div>
                 </div>
-              </div>
 
-              <div>
-                <label
-                  class="block text-sm font-medium text-gray-700 dark:text-gray-300"
-                >
-                  Benefits
-                </label>
-                <div class="flex gap-2 mt-1">
-                  <BaseInput
-                    v-model="newBenefit"
-                    type="text"
-                    placeholder="Add a benefit"
-                    class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
-                    @keyup.enter="addBenefit"
-                  />
-                  <BaseButton
-                    type="button"
-                    @click="addBenefit"
+                <div>
+                  <label
+                    class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
                   >
-                    Add
-                  </BaseButton>
-                </div>
-                <div class="flex flex-wrap gap-2 mt-2">
-                  <BaseBadge
-                    v-for="benefit in formData.benefits"
-                    :key="benefit"
-                    variant="pill"
-                    class="cursor-pointer"
-                    @click="removeBenefit(benefit)"
-                  >
-                    {{ benefit }}
-                    <BaseIcon
-                      :name="'x' as IconName"
-                      class="ml-1 w-4 h-4"
+                    Benefits
+                  </label>
+                  <div class="flex gap-2">
+                    <BaseInput
+                      v-model="newBenefit"
+                      type="text"
+                      placeholder="Add a benefit"
+                      class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 dark:bg-gray-700 bg-white"
+                      @keyup.enter="addBenefit"
                     />
-                  </BaseBadge>
+                    <BaseButton
+                      type="button"
+                      @click="addBenefit"
+                    >
+                      Add
+                    </BaseButton>
+                  </div>
+                  <div class="flex flex-wrap gap-2 mt-2">
+                    <BaseBadge
+                      v-for="benefit in formData.benefits"
+                      :key="benefit"
+                      variant="pill"
+                      class="cursor-pointer"
+                      @click="removeBenefit(benefit)"
+                    >
+                      {{ benefit }}
+                      <BaseIcon
+                        :name="'x' as IconName"
+                        class="ml-1 w-4 h-4"
+                      />
+                    </BaseBadge>
+                  </div>
                 </div>
               </div>
             </div>
-
-            <div class="flex justify-end gap-4">
-              <BaseButton
-                type="submit"
-                variant="primary"
-                size="lg"
-              >
-                Post Job
-              </BaseButton>
-            </div>
-          </form>
+          </div>
         </div>
 
         <div class="lg:sticky lg:top-4">
-          <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+          <h2 class="text-2xl font-bold text-gray-900 dark:text-white mb-6">
             Preview
           </h2>
-          <div class="bg-gray-100 dark:bg-gray-900 rounded-lg p-6 shadow-sm">
+          <div class="rounded-lg">
             <JobDetailsCard
               v-if="isPreviewComplete"
               :job="previewJob"
             />
             <div
               v-else
-              class="text-red-500"
+              class="flex items-center justify-center space-x-2 text-gray-500 dark:text-gray-400 bg-gray-50 dark:bg-gray-900 p-8 rounded-lg border-2 border-dashed border-gray-200 dark:border-gray-700"
             >
-              Job is not sufficiently complete to preview.
+              <BaseIcon
+                name="preview"
+                class="w-5 h-5"
+              />
+              <span>Complete the required fields to see your job posting preview</span>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="flex justify-end">
+        <BaseButton
+          type="submit"
+          variant="primary"
+          size="lg"
+        >
+          Post Job
+        </BaseButton>
+      </div>
+    </form>
   </div>
 </template>

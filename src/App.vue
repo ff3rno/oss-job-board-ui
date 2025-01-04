@@ -2,8 +2,8 @@
 import { RouterView } from 'vue-router'
 import { onMounted } from 'vue'
 import { useThemeStore } from '@/stores/theme'
-import PageHeader from '@/components/PageHeader/PageHeader.vue'
-import PageFooter from '@/components/PageFooter/PageFooter.vue'
+import PageHeader from '@/components/PageHeader.vue'
+import PageFooter from '@/components/PageFooter.vue'
 
 const themeStore = useThemeStore()
 
@@ -13,10 +13,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-col min-h-screen bg-white dark:bg-gray-900">
+  <div class="min-h-screen flex flex-col bg-white dark:bg-gray-900">
     <PageHeader />
 
-    <main class="flex-1 w-full">
+    <main class="flex-1 w-full py-2">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
         <RouterView />
       </div>

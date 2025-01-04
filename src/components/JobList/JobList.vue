@@ -9,7 +9,6 @@ const props = defineProps<{
   jobs: JobPosting[]
   sortDirection: string
   sortKey: string
-  pageSize: number
   class?: string
 }>()
 
@@ -57,6 +56,7 @@ defineEmits<{
       :sort-direction="sortDirection"
       :sort-key="sortKey"
       :layout="layout"
+      class="sticky top-[4.5rem] z-30 bg-gray-50 dark:bg-gray-900 px-4 py-4 shadow-sm"
       @update:sort-direction="$emit('update:sortDirection', $event)"
       @update:sort-key="$emit('update:sortKey', $event)"
       @update:layout="layout = $event"
@@ -65,8 +65,8 @@ defineEmits<{
     <InfiniteJobList
       :jobs="sortedJobs"
       :layout="layout"
-      :page-size="pageSize"
-      class="h-[calc(100vh-16rem)] mt-4"
+      :page-size="10"
+      class="mt-6 relative z-20"
     />
   </main>
 </template>

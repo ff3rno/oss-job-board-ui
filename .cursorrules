@@ -47,3 +47,4 @@ Vue 3 and Composition API Best Practices
 - Implement custom composables for reusable logic.
 
 Follow the official Vue.js documentation for up-to-date best practices.
+Parallelize your operations wherever possible.

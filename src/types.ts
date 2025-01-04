@@ -33,6 +33,7 @@ export interface JobPosting {
   skills: string[]
   benefits: string[]
   featuredAt?: number
+  relatedJobIds: number[]
 }
 
 export type NavigationLink = {

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { clsx } from 'clsx'
 import BaseSelect from '@/components/shared/BaseSelect.vue'
 import LayoutToggleGroup, {
   type LayoutType,
@@ -9,6 +11,7 @@ const props = defineProps<{
   sortDirection: string
   sortKey: string
   layout: LayoutType
+  class?: string
 }>()
 
 const sortOptions = [
@@ -30,10 +33,14 @@ defineEmits<{
   'update:sortKey': [value: string]
   'update:layout': [value: LayoutType]
 }>()
+
+const containerClasses = computed(() =>
+  clsx('flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2', props.class)
+)
 </script>
 
 <template>
-  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+  <div :class="containerClasses">
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
       <BaseSelect
         :model-value="sortKey"

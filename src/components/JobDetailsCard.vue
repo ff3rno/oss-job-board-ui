@@ -14,7 +14,7 @@ const getCompanyLogoUrl = (company: string) => {
 </script>
 
 <template>
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 sm:p-8">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm sm:p-8">
     <div class="flex flex-col sm:flex-row gap-6 sm:items-start mb-8">
       <img
         :src="getCompanyLogoUrl(job.company)"
@@ -26,22 +26,35 @@ const getCompanyLogoUrl = (company: string) => {
           {{ job.title }}
         </h1>
         <h2
+          v-if="job.company"
           class="text-xl font-semibold text-indigo-600 dark:text-indigo-400 mb-4"
         >
           {{ job.company }}
         </h2>
         <div class="flex flex-wrap gap-3">
           <div
+            v-if="job.location"
             class="flex items-center gap-1.5 text-gray-600 dark:text-gray-400"
           >
             <BaseIcon name="world" />
             <span>{{ job.location }}</span>
           </div>
-          <BaseBadge icon="briefcase">
+          <BaseBadge
+            v-if="job.experienceLevel"
+            icon="briefcase"
+          >
             {{ job.experienceLevel }}
           </BaseBadge>
-          <BaseBadge variant="pill">{{ job.jobType }}</BaseBadge>
-          <BaseBadge icon="money">
+          <BaseBadge
+            v-if="job.jobType"
+            variant="pill"
+          >
+            {{ job.jobType }}
+          </BaseBadge>
+          <BaseBadge
+            v-if="job.salary?.min && job.salary?.max && job.salary?.currency"
+            icon="money"
+          >
             {{ job.salary.currency }}{{ job.salary.min.toLocaleString() }} -
             {{ job.salary.max.toLocaleString() }}
           </BaseBadge>
@@ -49,7 +62,10 @@ const getCompanyLogoUrl = (company: string) => {
       </div>
     </div>
 
-    <div class="prose dark:prose-invert max-w-none mb-8">
+    <div
+      v-if="job.description"
+      class="prose dark:prose-invert max-w-none mb-8"
+    >
       <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
         Job Description
       </h3>
@@ -59,7 +75,7 @@ const getCompanyLogoUrl = (company: string) => {
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <div>
+      <div v-if="job.skills?.length">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
           Required Skills
         </h3>
@@ -74,7 +90,7 @@ const getCompanyLogoUrl = (company: string) => {
         </div>
       </div>
 
-      <div>
+      <div v-if="job.benefits?.length">
         <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
           Benefits
         </h3>
@@ -95,10 +111,18 @@ const getCompanyLogoUrl = (company: string) => {
       <div
         class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
       >
-        <span class="text-sm text-gray-500 dark:text-gray-400">
+        <span
+          v-if="job.datePosted"
+          class="text-sm text-gray-500 dark:text-gray-400"
+        >
           Posted on: {{ job.datePosted }}
         </span>
-        <BaseButton size="lg">Apply Now</BaseButton>
+        <BaseButton
+          size="lg"
+          variant="secondary"
+        >
+          Apply Now
+        </BaseButton>
       </div>
     </div>
   </div>

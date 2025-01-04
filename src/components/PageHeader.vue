@@ -39,9 +39,9 @@ const handlePostJob = () => {
               v-for="link in navigationLinks"
               :key="link.path"
               :to="link.path"
-              class="text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium transition-colors"
+              class="px-3 py-2 rounded-lg text-gray-600 dark:text-gray-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/30 font-medium transition-all duration-200"
               :class="{
-                'text-emerald-600 dark:text-emerald-400':
+                'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 font-semibold':
                   $route.path === link.path,
               }"
             >

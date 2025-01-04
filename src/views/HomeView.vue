@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { faker } from '@faker-js/faker'
-import FilterSidebar from '@/components/FilterSidebar/FilterSidebar.vue'
+import FilterSidebar from '@/components/FilterSidebar.vue'
 import JobList from '@/components/JobList/JobList.vue'
-import FeaturedJobsCarousel from '@/components/FeaturedJobs/FeaturedJobsCarousel.vue'
+import FeaturedJobsCarousel from '@/components/FeaturedJobsCarousel.vue'
 import { ExperienceLevel, JobType, type JobPosting } from '@/types'
 import { useRoute } from 'vue-router'
 
-const JOB_COUNT = 200
-const FEATURED_JOB_COUNT = 5
+const JOB_COUNT = 30
+const FEATURED_JOB_COUNT = 10
 
 const jobTypes = Object.values(JobType)
 const experienceLevels = Object.values(ExperienceLevel)
@@ -64,6 +64,7 @@ const generateJob = (id: number, isFeatured: boolean = false): JobPosting => {
     skills: faker.helpers.arrayElements(techSkills, { min: 3, max: 8 }),
     benefits: faker.helpers.arrayElements(benefits, { min: 3, max: 6 }),
     companyLogo: faker.image.urlLoremFlickr({ category: 'business' }),
+    relatedJobIds: [],
     ...(isFeatured
       ? {
           featuredAt:
@@ -135,43 +136,49 @@ const featuredJobsList = computed(() =>
 
 const route = useRoute()
 
+const addRelatedJobIds = () => {
+  jobs.value = jobs.value.map(job => {
+    const otherJobs = jobs.value.filter(j => j.id !== job.id)
+    const relatedJobIds = faker.helpers.arrayElements(
+      otherJobs.map(j => j.id),
+      { min: 3, max: 5 }
+    )
+    return { ...job, relatedJobIds }
+  })
+  localStorage.setItem('jobs', JSON.stringify(jobs.value))
+}
+
 onMounted(() => {
+  addRelatedJobIds()
   if (route.params.newJob) {
     const newJob = JSON.parse(
       decodeURIComponent(route.params.newJob as string),
     ) as JobPosting
     jobs.value.unshift(newJob)
+    localStorage.setItem('jobs', JSON.stringify(jobs.value))
   }
 })
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <FeaturedJobsCarousel
-      v-if="featuredJobsList.length > 0"
-      :jobs="featuredJobsList"
-      class="mt-6"
+  <div class="flex flex-col gap-1 min-h-full py-6 lg:flex-row gap-8 flex-1">
+    <JobList
+      class="flex-1"
+      :jobs="filteredJobs"
+      v-model:sortDirection="sortDirection"
+      v-model:sortKey="sortKey"
+      :page-size="5"
     />
 
-    <div class="flex flex-col lg:flex-row gap-8 mt-2 mr-3">
-      <JobList
-        class="flex-1"
-        :jobs="filteredJobs"
-        v-model:sortDirection="sortDirection"
-        v-model:sortKey="sortKey"
-        :page-size="5"
-      />
-
-      <FilterSidebar
-        class="w-full lg:w-80 lg:sticky lg:top-32 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto"
-        v-model:searchTerm="searchTerm"
-        v-model:selectedLocation="selectedLocation"
-        v-model:selectedJobType="selectedJobType as JobType"
-        v-model:selectedExperience="selectedExperience"
-        v-model:minSalary="minSalary"
-        v-model:maxSalary="maxSalary"
-        :jobs="jobs"
-      />
-    </div>
+    <FilterSidebar
+      class="w-full lg:w-80"
+      v-model:searchTerm="searchTerm"
+      v-model:selectedLocation="selectedLocation"
+      v-model:selectedJobType="selectedJobType as JobType"
+      v-model:selectedExperience="selectedExperience"
+      v-model:minSalary="minSalary"
+      v-model:maxSalary="maxSalary"
+      :jobs="jobs"
+    />
   </div>
 </template>

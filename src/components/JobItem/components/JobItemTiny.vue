@@ -37,9 +37,9 @@ const props = defineProps<{
       </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2 mt-3 text-sm">
+    <div class="flex items-center justify-between mt-3 text-sm">
       <div
-        class="flex items-center gap-1 text-gray-600 dark:text-gray-400 min-w-0 max-w-[30%]"
+        class="flex items-center gap-1 text-gray-600 dark:text-gray-400 min-w-0 max-w-[50%]"
       >
         <BaseIcon
           name="world"
@@ -49,15 +49,9 @@ const props = defineProps<{
       </div>
       <BaseBadge
         variant="pill"
-        class="text-xs flex-shrink-0"
+        class="text-xs flex-shrink-0 min-w-0 max-w-[50%]"
       >
         {{ job.jobType }}
-      </BaseBadge>
-      <BaseBadge
-        icon="money"
-        class="text-xs ml-auto flex-shrink-0"
-      >
-        {{ job.salary.currency }}{{ job.salary.min.toLocaleString() }}+
       </BaseBadge>
     </div>
   </BaseJobCard>
