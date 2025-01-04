@@ -74,7 +74,7 @@ defineEmits<{
             @update:sort-key="$emit('update:sortKey', $event)"
         />
 
-        <div class="flex flex-col gap-5 px-2 pb-8">
+        <div class="flex flex-col gap-8 px-2 pb-8">
             <JobCard
                 v-for="job in sortedJobs"
                 :key="job.id"

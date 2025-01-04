@@ -89,7 +89,7 @@ const resetFilters = () => {
 
 <template>
     <aside :class="[props.class]">
-        <div class="p-6">
+        <div class="p-4 sm:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-y-auto">
             <div class="mb-6">
                 <BaseInput
                     id="search"
@@ -109,7 +109,7 @@ const resetFilters = () => {
                         label="Location:"
                         placeholder="All"
                         class="w-full"
-                        labelClass="min-w-[120px]"
+                        labelClass="min-w-[120px] dark:text-gray-300"
                         @update:modelValue="emit('update:selectedLocation', $event)"
                     />
                 </div>
@@ -124,7 +124,7 @@ const resetFilters = () => {
                         label="Job Type:"
                         placeholder="All"
                         class="w-full"
-                        labelClass="min-w-[120px]"
+                        labelClass="min-w-[120px] dark:text-gray-300"
                         @update:modelValue="emit('update:selectedJobType', $event as JobType)"
                     />
                 </div>
@@ -139,14 +139,14 @@ const resetFilters = () => {
                         label="Experience Level:"
                         placeholder="All"
                         class="w-full"
-                        labelClass="min-w-[120px]"
+                        labelClass="min-w-[120px] dark:text-gray-300"
                         @update:modelValue="emit('update:selectedExperience', $event as ExperienceLevel)"
                     />
                 </div>
             </div>
 
             <div class="mb-6">
-                <label class="text-sm font-medium text-gray-700 mb-2 block">
+                <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
                     Salary Range:
                 </label>
                 <div class="flex items-center gap-2">

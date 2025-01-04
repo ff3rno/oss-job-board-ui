@@ -24,9 +24,9 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const variantClasses = {
-    primary: 'bg-indigo-600 text-white hover:bg-indigo-700',
-    secondary: 'bg-emerald-500 text-white hover:bg-emerald-600',
-    outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
+    primary: 'bg-indigo-600 text-white hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600',
+    secondary: 'bg-emerald-500 text-white hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700',
+    outline: 'border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
 }
 
 const sizeClasses = {

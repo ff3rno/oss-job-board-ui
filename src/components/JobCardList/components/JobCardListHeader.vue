@@ -30,8 +30,8 @@ const sortDirectionOptions = [
     <div class="mb-8">
         <div class="flex items-center justify-between">
             <div class="space-y-1">
-                <h1 class="text-2xl font-bold text-gray-900">Postings</h1>
-                <p class="text-sm text-gray-600">
+                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Postings</h1>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
                     Showing {{ jobCount }} jobs
                 </p>
             </div>
@@ -52,6 +52,6 @@ const sortDirectionOptions = [
                 />
             </div>
         </div>
-        <div class="h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 mt-6"></div>
+        <div class="h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 mt-6"></div>
     </div>
 </template>

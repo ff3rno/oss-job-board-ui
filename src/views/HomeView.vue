@@ -107,7 +107,7 @@ const filteredJobs = computed(() => {
             v-model:sortKey="sortKey"
         />
         <FilterSidebar
-            class="w-full lg:w-80 lg:border-l lg:border-gray-200"
+            class="w-full lg:w-80 lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)]"
             v-model:searchTerm="searchTerm"
             v-model:selectedLocation="selectedLocation"
             v-model:selectedJobType="selectedJobType as JobType"
