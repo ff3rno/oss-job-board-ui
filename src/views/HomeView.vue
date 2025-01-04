@@ -100,10 +100,12 @@ const filteredJobs = computed(() => {
 <template>
     <div class="flex">
         <JobCardList
+            class="pl-8"
             :jobs="filteredJobs"
             v-model:sortDirection="sortDirection"
         />
         <FilterSidebar
+            class="pr-8 w-80"
             v-model:searchTerm="searchTerm"
             v-model:selectedLocation="selectedLocation"
             v-model:selectedJobType="selectedJobType"
