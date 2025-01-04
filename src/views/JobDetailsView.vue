@@ -9,33 +9,31 @@ const route = useRoute()
 const router = useRouter()
 
 const job = computed(() =>
-    route.params.job
-        ? (JSON.parse(
-              decodeURIComponent(route.params.job as string),
-          ) as JobPosting)
-        : null,
+  route.params.job
+    ? (JSON.parse(decodeURIComponent(route.params.job as string)) as JobPosting)
+    : null,
 )
 
 const handleBack = () => {
-    router.push('/')
+  router.push('/')
 }
 </script>
 
 <template>
-    <div
-        v-if="job"
-        class="py-8"
-    >
-        <div class="mb-6">
-            <BaseButton
-                variant="outline"
-                icon="arrow-left"
-                @click="handleBack"
-            >
-                Back to Jobs
-            </BaseButton>
-        </div>
-
-        <JobDetailsCard :job="job" />
+  <div
+    v-if="job"
+    class="py-8"
+  >
+    <div class="mb-6">
+      <BaseButton
+        variant="outline"
+        icon="arrow-left"
+        @click="handleBack"
+      >
+        Back to Jobs
+      </BaseButton>
     </div>
+
+    <JobDetailsCard :job="job" />
+  </div>
 </template>

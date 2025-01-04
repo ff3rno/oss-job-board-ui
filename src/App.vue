@@ -8,20 +8,20 @@ import PageFooter from '@/components/PageFooter/PageFooter.vue'
 const themeStore = useThemeStore()
 
 onMounted(() => {
-    themeStore.initializeTheme()
+  themeStore.initializeTheme()
 })
 </script>
 
 <template>
-    <div class="flex flex-col min-h-screen bg-white dark:bg-gray-900">
-        <PageHeader />
+  <div class="flex flex-col min-h-screen bg-white dark:bg-gray-900">
+    <PageHeader />
 
-        <main class="flex-1 w-full">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <RouterView />
-            </div>
-        </main>
+    <main class="flex-1 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <RouterView />
+      </div>
+    </main>
 
-        <PageFooter />
-    </div>
+    <PageFooter />
+  </div>
 </template>

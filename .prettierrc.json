@@ -4,6 +4,5 @@
   "singleQuote": true,
   "printWidth": 80,
   "singleAttributePerLine": true,
-  "htmlWhitespaceSensitivity": "ignore",
-  "tabWidth": 4
+  "htmlWhitespaceSensitivity": "ignore"
 }
