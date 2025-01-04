@@ -40,7 +40,7 @@ defineEmits<{
                 'border border-gray-300 dark:border-gray-600',
                 'first:rounded-l-lg first:border-r-0',
                 'last:rounded-r-lg last:border-l-0',
-                'middle:border-r-0'
+                'middle:border-r-0',
             ]"
             :title="option.label"
             @click="$emit('update:modelValue', option.value)"

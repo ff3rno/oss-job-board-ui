@@ -1,38 +1,19 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-import { ExperienceLevel, JobType } from '@/types/job'
-import BaseButton from '@/components/shared/BaseButton.vue'
-import BaseSelect from '@/components/shared/BaseSelect.vue'
+import { ref, computed } from 'vue'
 import BaseInput from '@/components/shared/BaseInput.vue'
-
-interface JobPosting {
-    id: number
-    title: string
-    company: string
-    location: string
-    jobType: JobType
-    description: string
-    datePosted: string
-    salary: {
-        min: number
-        max: number
-        currency: string
-    }
-    experienceLevel: ExperienceLevel
-    skills: string[]
-    benefits: string[]
-    companyLogo: string
-}
+import BaseSelect from '@/components/shared/BaseSelect.vue'
+import BaseButton from '@/components/shared/BaseButton.vue'
+import { JobType, ExperienceLevel, type JobPosting } from '@/types'
 
 const props = defineProps<{
+    jobs: JobPosting[]
     searchTerm: string
     selectedLocation: string
-    selectedJobType: JobType | ''
+    selectedJobType: string
     selectedExperience: ExperienceLevel | ''
     minSalary: number | null
     maxSalary: number | null
     class?: string
-    jobs: JobPosting[]
 }>()
 
 type Emits = {
@@ -51,28 +32,28 @@ const jobTypes = Object.values(JobType)
 const experienceLevels = Object.values(ExperienceLevel)
 
 const uniqueLocations = computed(() => {
-    const locations = new Set(props.jobs.map(job => job.location))
+    const locations = new Set(props.jobs.map((job) => job.location))
     return Array.from(locations).sort()
 })
 
 const locationOptions = computed(() => {
-    return uniqueLocations.value.map(location => ({
+    return uniqueLocations.value.map((location) => ({
         value: location,
-        label: location
+        label: location,
     }))
 })
 
 const jobTypeOptions = computed(() => {
-    return jobTypes.map(type => ({
+    return jobTypes.map((type) => ({
         value: type,
-        label: type
+        label: type,
     }))
 })
 
 const experienceLevelOptions = computed(() => {
-    return experienceLevels.map(level => ({
+    return experienceLevels.map((level) => ({
         value: level,
-        label: level
+        label: level,
     }))
 })
 
@@ -89,7 +70,9 @@ const resetFilters = () => {
 
 <template>
     <aside :class="[props.class]">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-y-auto h-full">
+        <div
+            class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-y-auto h-full"
+        >
             <div class="p-4 sm:p-6">
                 <div class="mb-6">
                     <BaseInput
@@ -97,7 +80,9 @@ const resetFilters = () => {
                         :modelValue="searchTerm"
                         placeholder="Search jobs..."
                         class="w-full"
-                        @update:modelValue="(value: string) => emit('update:searchTerm', value)"
+                        @update:modelValue="
+                            (value: string) => emit('update:searchTerm', value)
+                        "
                     />
                 </div>
 
@@ -111,7 +96,9 @@ const resetFilters = () => {
                             placeholder="All"
                             class="w-full"
                             labelClass="min-w-[120px] dark:text-gray-300"
-                            @update:modelValue="emit('update:selectedLocation', $event)"
+                            @update:modelValue="
+                                emit('update:selectedLocation', $event)
+                            "
                         />
                     </div>
                 </div>
@@ -126,7 +113,12 @@ const resetFilters = () => {
                             placeholder="All"
                             class="w-full"
                             labelClass="min-w-[120px] dark:text-gray-300"
-                            @update:modelValue="emit('update:selectedJobType', $event as JobType)"
+                            @update:modelValue="
+                                emit(
+                                    'update:selectedJobType',
+                                    $event as JobType,
+                                )
+                            "
                         />
                     </div>
                 </div>
@@ -141,13 +133,20 @@ const resetFilters = () => {
                             placeholder="All"
                             class="w-full"
                             labelClass="min-w-[120px] dark:text-gray-300"
-                            @update:modelValue="emit('update:selectedExperience', $event as ExperienceLevel)"
+                            @update:modelValue="
+                                emit(
+                                    'update:selectedExperience',
+                                    $event as ExperienceLevel,
+                                )
+                            "
                         />
                     </div>
                 </div>
 
                 <div class="mb-6">
-                    <label class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block">
+                    <label
+                        class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2 block"
+                    >
                         Salary Range:
                     </label>
                     <div class="flex items-center gap-2">
@@ -157,7 +156,10 @@ const resetFilters = () => {
                             :modelValue="minSalary"
                             placeholder="Min"
                             class="w-1/2"
-                            @update:modelValue="(value: number | null) => emit('update:minSalary', value)"
+                            @update:modelValue="
+                                (value: number | null) =>
+                                    emit('update:minSalary', value)
+                            "
                         />
                         <BaseInput
                             id="maxSalary"
@@ -165,7 +167,10 @@ const resetFilters = () => {
                             :modelValue="maxSalary"
                             placeholder="Max"
                             class="w-1/2"
-                            @update:modelValue="(value: number | null) => emit('update:maxSalary', value)"
+                            @update:modelValue="
+                                (value: number | null) =>
+                                    emit('update:maxSalary', value)
+                            "
                         />
                     </div>
                 </div>

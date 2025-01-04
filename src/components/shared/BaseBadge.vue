@@ -16,7 +16,7 @@ const props = defineProps<{
             variant === 'pill'
                 ? 'rounded-full bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300'
                 : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300',
-            props.class
+            props.class,
         ]"
     >
         <BaseIcon
