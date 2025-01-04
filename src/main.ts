@@ -1,4 +1,6 @@
-import './assets/main.css'
+import 'normalize.css/normalize.css'
+import './assets/font-roboto.css'
+import './assets/index.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
