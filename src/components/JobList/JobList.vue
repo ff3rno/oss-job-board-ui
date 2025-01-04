@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import JobListHeader from '@/components/JobList/components/JobListHeader.vue'
-import JobItem from '@/components/JobItem/JobItem.vue'
-import { JobType, ExperienceLevel, type JobPosting } from '@/types'
+import InfiniteJobList from '@/components/JobList/components/InfiniteJobList.vue'
 import { computed, ref } from 'vue'
 import { type LayoutType } from '@/components/shared/LayoutToggleGroup.vue'
+import type { JobPosting } from '@/types'
 
 const props = defineProps<{
   jobs: JobPosting[]
   sortDirection: string
   sortKey: string
+  pageSize: number
   class?: string
 }>()
 
@@ -55,30 +56,17 @@ defineEmits<{
     <JobListHeader
       :sort-direction="sortDirection"
       :sort-key="sortKey"
-      :job-count="jobs.length"
       :layout="layout"
       @update:sort-direction="$emit('update:sortDirection', $event)"
       @update:sort-key="$emit('update:sortKey', $event)"
       @update:layout="layout = $event"
     />
 
-    <div
-      :class="[
-        layout === 'grid'
-          ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
-          : layout === 'list'
-            ? 'flex flex-col gap-4'
-            : 'flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-sm',
-        'px-2 mb-8 max-w-4xl mx-auto lg:mx-0',
-      ]"
-    >
-      <JobItem
-        v-for="job in sortedJobs"
-        :key="job.id"
-        :job="job"
-        :layout="layout"
-        :class="layout === 'grid' ? 'h-full' : ''"
-      />
-    </div>
+    <InfiniteJobList
+      :jobs="sortedJobs"
+      :layout="layout"
+      :page-size="pageSize"
+      class="h-[calc(100vh-16rem)] mt-4"
+    />
   </main>
 </template>

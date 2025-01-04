@@ -7,7 +7,7 @@ import FeaturedJobsCarousel from '@/components/FeaturedJobs/FeaturedJobsCarousel
 import { ExperienceLevel, JobType, type JobPosting } from '@/types'
 import { useRoute } from 'vue-router'
 
-const JOB_COUNT = 50
+const JOB_COUNT = 200
 const FEATURED_JOB_COUNT = 5
 
 const jobTypes = Object.values(JobType)
@@ -159,6 +159,7 @@ onMounted(() => {
         :jobs="filteredJobs"
         v-model:sortDirection="sortDirection"
         v-model:sortKey="sortKey"
+        :page-size="5"
       />
 
       <FilterSidebar

@@ -1,45 +1,77 @@
-# oss-job-board-ui
+# OSS Job Board UI
 
-This template should help get you started developing with Vue 3 in Vite.
+A modern, responsive job board interface for open-source projects, built entirely with Cursor's AI integrations.
 
-## Recommended IDE Setup
+*TODO*
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+## Features
 
-## Type Support for `.vue` Imports in TS
+- 🚀 Modern Vue 3 + TypeScript stack
+- 💨 Tailwind CSS for responsive design
+- 📱 Mobile-first approach
+- ♾️ Infinite scrolling job list
+- 🔍 Advanced filtering capabilities
+- ⚡️ Lightning-fast performance
+- 🎯 Fully type-safe codebase
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## Tech Stack
 
-## Customize configuration
+- [Vue 3](https://vuejs.org/) - Progressive JavaScript Framework
+- [TypeScript](https://www.typescriptlang.org/) - JavaScript with syntax for types
+- [Pinia](https://pinia.vuejs.org/) - State management
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
+- [Vite](https://vitejs.dev/) - Next Generation Frontend Tooling
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+## Prerequisites
 
-## Project Setup
+- Node.js 18+
+- pnpm
 
-```sh
+## Setup
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/ff3rno/oss-job-board-ui.git
+cd oss-job-board-ui
+```
+
+2. Install dependencies:
+
+```bash
 pnpm install
 ```
 
-### Compile and Hot-Reload for Development
+3. Start the development server:
 
-```sh
+```bash
 pnpm dev
 ```
 
-### Type-Check, Compile and Minify for Production
+## Available Scripts
 
-```sh
-pnpm build
-```
+- `pnpm dev` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm test:unit` - Run unit tests
+- `pnpm type-check` - Run TypeScript type checking
+- `pnpm lint` - Run all linters
+- `pnpm format` - Format code with Prettier
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## Contributing
 
-```sh
-pnpm test:unit
-```
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-### Lint with [ESLint](https://eslint.org/)
+## License
 
-```sh
-pnpm lint
-```
+This project is open source and available under the [MIT License](LICENSE).
+
+## Acknowledgments
+
+- Built with [Cursor](https://cursor.sh/) - The AI-first code editor
+- Powered by Vue 3 and TypeScript
+- Styled with Tailwind CSS

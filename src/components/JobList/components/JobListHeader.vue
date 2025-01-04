@@ -8,27 +8,15 @@ import LayoutToggleGroup, {
 const props = defineProps<{
   sortDirection: string
   sortKey: string
-  jobCount: number
   layout: LayoutType
 }>()
 
-defineEmits<{
-  'update:sortDirection': [value: string]
-  'update:sortKey': [value: string]
-  'update:layout': [value: LayoutType]
-}>()
-
-const sortKeyOptions = [
+const sortOptions = [
+  { value: 'datePosted', label: 'Date Posted' },
   { value: 'title', label: 'Title' },
   { value: 'location', label: 'Location' },
-  { value: 'salary', label: 'Salary Range' },
+  { value: 'salary', label: 'Salary' },
   { value: 'experienceLevel', label: 'Experience Level' },
-  { value: 'datePosted', label: 'Date Posted' },
-]
-
-const sortDirectionOptions = [
-  { value: 'asc', label: 'Ascending' },
-  { value: 'desc', label: 'Descending' },
 ]
 
 const layoutOptions: LayoutOption[] = [
@@ -36,43 +24,39 @@ const layoutOptions: LayoutOption[] = [
   { value: 'list', icon: 'list', label: 'List View' },
   { value: 'compact', icon: 'compact', label: 'Compact View' },
 ]
+
+defineEmits<{
+  'update:sortDirection': [value: string]
+  'update:sortKey': [value: string]
+  'update:layout': [value: LayoutType]
+}>()
 </script>
 
 <template>
-  <div class="mb-8">
-    <div class="flex items-center justify-between">
-      <div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">
-          Postings
-        </h1>
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          Showing {{ jobCount }} jobs
-        </p>
-      </div>
-      <div class="flex items-center gap-3">
-        <LayoutToggleGroup
-          :model-value="layout"
-          :options="layoutOptions"
-          @update:model-value="$emit('update:layout', $event)"
-        />
-        <div class="flex items-end gap-3">
-          <BaseSelect
-            id="sortKey"
-            :model-value="sortKey"
-            :options="sortKeyOptions"
-            @update:model-value="$emit('update:sortKey', $event)"
-          />
-          <BaseSelect
-            id="sortDirection"
-            :model-value="sortDirection"
-            :options="sortDirectionOptions"
-            @update:model-value="$emit('update:sortDirection', $event)"
-          />
-        </div>
-      </div>
+  <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+      <BaseSelect
+        :model-value="sortKey"
+        :options="sortOptions"
+        class="w-48"
+        @update:model-value="$emit('update:sortKey', $event)"
+      />
+
+      <BaseSelect
+        :model-value="sortDirection"
+        :options="[
+          { value: 'asc', label: 'Ascending' },
+          { value: 'desc', label: 'Descending' },
+        ]"
+        class="w-36"
+        @update:model-value="$emit('update:sortDirection', $event)"
+      />
     </div>
-    <div
-      class="h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-700 dark:via-gray-600 dark:to-gray-700 mt-6"
-    ></div>
+
+    <LayoutToggleGroup
+      :model-value="layout"
+      :options="layoutOptions"
+      @update:model-value="$emit('update:layout', $event)"
+    />
   </div>
 </template>
