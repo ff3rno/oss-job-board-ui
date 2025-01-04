@@ -1,18 +1,10 @@
 # OSS Job Board UI
 
-A modern, responsive job board interface for open-source projects, built entirely with Cursor's AI integrations.
+A modern, responsive job board interface for open-source projects, **built entirely with Cursor's AI integrations.**
+
+> *Even the README!*
 
 *TODO*
-
-## Features
-
-- 🚀 Modern Vue 3 + TypeScript stack
-- 💨 Tailwind CSS for responsive design
-- 📱 Mobile-first approach
-- ♾️ Infinite scrolling job list
-- 🔍 Advanced filtering capabilities
-- ⚡️ Lightning-fast performance
-- 🎯 Fully type-safe codebase
 
 ## Tech Stack
 
