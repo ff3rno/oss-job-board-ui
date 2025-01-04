@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ExperienceLevel, JobType } from '@/types/job'
+import BaseButton from '@/components/shared/BaseButton.vue'
 
 interface JobPosting {
     id: number
@@ -195,12 +196,13 @@ const resetFilters = () => {
             </div>
 
             <div>
-                <button
+                <BaseButton
+                    variant="secondary"
+                    block
                     @click="resetFilters"
-                    class="w-full px-4 py-3 bg-emerald-500 text-white font-semibold rounded-md hover:bg-emerald-600 transition-colors"
                 >
                     Reset Filters
-                </button>
+                </BaseButton>
             </div>
         </div>
     </aside>
