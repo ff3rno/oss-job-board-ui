@@ -23,6 +23,7 @@ const props = defineProps<{
     <main :class="['flex-1 py-5', props.class]">
         <JobCardListHeader
             :sort-direction="sortDirection"
+            :job-count="jobs.length"
             @update:sort-direction="$emit('update:sortDirection', $event)"
         />
 
@@ -32,9 +33,6 @@ const props = defineProps<{
                 :key="job.id"
                 :job="job"
             />
-        </div>
-        <div class="mt-4 text-sm text-gray-600">
-            Showing {{ jobs.length }} jobs
         </div>
     </main>
 </template>

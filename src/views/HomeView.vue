@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+import { faker } from '@faker-js/faker'
 import FilterSidebar from '@/components/FilterSidebar/FilterSidebar.vue'
 import JobCardList from '@/components/JobCardList/JobCardList.vue'
+
+const JOB_COUNT = 50
 
 interface JobPosting {
     id: number
@@ -11,57 +14,55 @@ interface JobPosting {
     jobType: string
     description: string
     datePosted: string
+    salary: {
+        min: number
+        max: number
+        currency: string
+    }
+    experienceLevel: string
+    skills: string[]
+    benefits: string[]
+    companyLogo: string
 }
 
-const jobs = ref<JobPosting[]>([
-    {
-        id: 1,
-        title: 'Frontend Developer',
-        company: 'Tech Corp',
-        location: 'New York, NY',
-        jobType: 'Full Time',
-        description: 'Develop and maintain user interfaces using Vue.js.',
-        datePosted: '2023-10-01',
-    },
-    {
-        id: 2,
-        title: 'Backend Engineer',
-        company: 'Innovate LLC',
-        location: 'San Francisco, CA',
-        jobType: 'Full Time',
-        description: 'Build and optimize server-side applications.',
-        datePosted: '2023-09-28',
-    },
-    {
-        id: 3,
-        title: 'Full Stack Developer',
-        company: 'Web Solutions',
-        location: 'Austin, TX',
-        jobType: 'Full Time',
-        description:
-            'Handle both frontend and backend tasks for various projects.',
-        datePosted: '2023-09-25',
-    },
-    {
-        id: 4,
-        title: 'UI/UX Designer',
-        company: 'Creative Minds',
-        location: 'Remote',
-        jobType: 'Full Time',
-        description:
-            'Design user-friendly interfaces and enhance user experience.',
-        datePosted: '2023-09-20',
-    },
-    {
-        id: 5,
-        title: 'DevOps Engineer',
-        company: 'CloudWorks',
-        location: 'Seattle, WA',
-        jobType: 'Full Time',
-        description: 'Manage infrastructure and automate deployment pipelines.',
-        datePosted: '2023-09-18',
-    },
-])
+const jobTypes = ['Full Time', 'Part Time', 'Contract', 'Freelance', 'Internship']
+const experienceLevels = ['Entry Level', 'Mid Level', 'Senior', 'Lead', 'Principal']
+const techSkills = [
+    'TypeScript', 'JavaScript', 'Vue.js', 'React', 'Node.js', 'Python',
+    'Java', 'Golang', 'AWS', 'Docker', 'Kubernetes', 'GraphQL', 'REST',
+    'PostgreSQL', 'MongoDB', 'Redis', 'CI/CD', 'Git'
+]
+const benefits = [
+    'Health Insurance', '401(k)', 'Remote Work', 'Flexible Hours',
+    'Unlimited PTO', 'Professional Development', 'Gym Membership',
+    'Stock Options', 'Company Events', 'Parental Leave'
+]
+
+const generateJob = (id: number): JobPosting => {
+    const minSalary = faker.number.int({ min: 50000, max: 150000 })
+    return {
+        id,
+        title: faker.person.jobTitle(),
+        company: faker.company.name(),
+        location: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+        jobType: faker.helpers.arrayElement(jobTypes),
+        description: faker.lorem.paragraphs(2),
+        datePosted: faker.date.recent({ days: 30 }).toISOString().split('T')[0],
+        salary: {
+            min: minSalary,
+            max: minSalary + faker.number.int({ min: 10000, max: 50000 }),
+            currency: 'USD'
+        },
+        experienceLevel: faker.helpers.arrayElement(experienceLevels),
+        skills: faker.helpers.arrayElements(techSkills, { min: 3, max: 8 }),
+        benefits: faker.helpers.arrayElements(benefits, { min: 3, max: 6 }),
+        companyLogo: faker.image.urlLoremFlickr({ category: 'business' })
+    }
+}
+
+const jobs = ref<JobPosting[]>(
+    Array.from({ length: JOB_COUNT }, (_, index) => generateJob(index + 1))
+)
 
 const searchTerm = ref('')
 const selectedLocation = ref('')

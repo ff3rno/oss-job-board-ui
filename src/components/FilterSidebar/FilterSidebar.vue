@@ -33,10 +33,6 @@ const resetFilters = () => {
 <template>
     <aside :class="[props.class]">
         <div class="p-6">
-            <h2 class="mb-6 text-2xl font-semibold text-gray-800 border-b pb-2">
-                Filters
-            </h2>
-
             <div class="mb-6">
                 <input
                     type="text"
