@@ -1,15 +1,25 @@
 <script setup lang="ts">
 import JobCardListHeader from './components/JobCardListHeader.vue'
 import JobCard from './components/JobCard.vue'
+import { JobType, ExperienceLevel } from '@/types/job'
 
 interface JobPosting {
     id: number
     title: string
     company: string
     location: string
-    jobType: string
+    jobType: JobType
     description: string
     datePosted: string
+    salary: {
+        min: number
+        max: number
+        currency: string
+    }
+    experienceLevel: ExperienceLevel
+    skills: string[]
+    benefits: string[]
+    companyLogo: string
 }
 
 const props = defineProps<{

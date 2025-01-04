@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { faker } from '@faker-js/faker'
 import FilterSidebar from '@/components/FilterSidebar/FilterSidebar.vue'
 import JobCardList from '@/components/JobCardList/JobCardList.vue'
+import { ExperienceLevel, JobType } from '@/types/job'
 
 const JOB_COUNT = 50
 
@@ -11,7 +12,7 @@ interface JobPosting {
     title: string
     company: string
     location: string
-    jobType: string
+    jobType: JobType
     description: string
     datePosted: string
     salary: {
@@ -19,14 +20,14 @@ interface JobPosting {
         max: number
         currency: string
     }
-    experienceLevel: string
+    experienceLevel: ExperienceLevel
     skills: string[]
     benefits: string[]
     companyLogo: string
 }
 
-const jobTypes = ['Full Time', 'Part Time', 'Contract', 'Freelance', 'Internship']
-const experienceLevels = ['Entry Level', 'Mid Level', 'Senior', 'Lead', 'Principal']
+const jobTypes = Object.values(JobType)
+const experienceLevels = Object.values(ExperienceLevel)
 const techSkills = [
     'TypeScript', 'JavaScript', 'Vue.js', 'React', 'Node.js', 'Python',
     'Java', 'Golang', 'AWS', 'Docker', 'Kubernetes', 'GraphQL', 'REST',
@@ -67,23 +68,29 @@ const jobs = ref<JobPosting[]>(
 const searchTerm = ref('')
 const selectedLocation = ref('')
 const selectedJobType = ref('')
-const selectedExperience = ref('')
+const selectedExperience = ref<ExperienceLevel | ''>('')
 const minSalary = ref<number | null>(null)
 const maxSalary = ref<number | null>(null)
 const sortDirection = ref('asc')
 
 const filteredJobs = computed(() => {
     let result = jobs.value.filter((job) => {
-        const matchesSearch =
+        const matchesSearch = searchTerm.value === '' ||
             job.title.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
             job.company.toLowerCase().includes(searchTerm.value.toLowerCase())
-        const matchesLocation =
-            selectedLocation.value === '' ||
-            job.location === selectedLocation.value
-        const matchesJobType =
-            selectedJobType.value === '' ||
+        const matchesLocation = !selectedLocation.value ||
+            job.location.toLowerCase().includes(selectedLocation.value.toLowerCase())
+        const matchesJobType = !selectedJobType.value ||
             job.jobType === selectedJobType.value
-        return matchesSearch && matchesLocation && matchesJobType
+        const matchesExperience = !selectedExperience.value ||
+            job.experienceLevel === selectedExperience.value
+        const meetsMinSalary = !minSalary.value ||
+            job.salary.min >= minSalary.value
+        const meetsMaxSalary = !maxSalary.value ||
+            job.salary.max <= maxSalary.value
+
+        return matchesSearch && matchesLocation && matchesJobType &&
+            matchesExperience && meetsMinSalary && meetsMaxSalary
     })
 
     result = result.sort((a, b) => {
@@ -109,10 +116,11 @@ const filteredJobs = computed(() => {
             class="w-full lg:w-80 lg:border-l lg:border-gray-200"
             v-model:searchTerm="searchTerm"
             v-model:selectedLocation="selectedLocation"
-            v-model:selectedJobType="selectedJobType"
+            v-model:selectedJobType="selectedJobType as JobType"
             v-model:selectedExperience="selectedExperience"
             v-model:minSalary="minSalary"
             v-model:maxSalary="maxSalary"
+            :jobs="jobs"
         />
     </div>
 </template>

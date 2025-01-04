@@ -1,23 +1,56 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+import { ExperienceLevel, JobType } from '@/types/job'
+
+interface JobPosting {
+    id: number
+    title: string
+    company: string
+    location: string
+    jobType: JobType
+    description: string
+    datePosted: string
+    salary: {
+        min: number
+        max: number
+        currency: string
+    }
+    experienceLevel: ExperienceLevel
+    skills: string[]
+    benefits: string[]
+    companyLogo: string
+}
+
 const props = defineProps<{
     searchTerm: string
     selectedLocation: string
-    selectedJobType: string
-    selectedExperience: string
+    selectedJobType: JobType | ''
+    selectedExperience: ExperienceLevel | ''
     minSalary: number | null
     maxSalary: number | null
     class?: string
+    jobs: JobPosting[]
 }>()
 
-const emit = defineEmits<{
-    'update:searchTerm': [value: string]
-    'update:selectedLocation': [value: string]
-    'update:selectedJobType': [value: string]
-    'update:selectedExperience': [value: string]
-    'update:minSalary': [value: number | null]
-    'update:maxSalary': [value: number | null]
-    resetFilters: []
-}>()
+type Emits = {
+    (e: 'update:searchTerm', value: string): void
+    (e: 'update:selectedLocation', value: string): void
+    (e: 'update:selectedJobType', value: JobType | ''): void
+    (e: 'update:selectedExperience', value: ExperienceLevel | ''): void
+    (e: 'update:minSalary', value: number | null): void
+    (e: 'update:maxSalary', value: number | null): void
+    (e: 'resetFilters'): void
+}
+
+const emit = defineEmits<Emits>()
+
+const jobTypes = Object.values(JobType)
+const experienceLevels = Object.values(ExperienceLevel)
+
+const uniqueLocations = computed(() => {
+    const locations = new Set(props.jobs.map(job => job.location))
+    return Array.from(locations).sort()
+})
 
 const resetFilters = () => {
     emit('update:searchTerm', '')
@@ -69,11 +102,9 @@ const resetFilters = () => {
                     class="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 >
                     <option value="">All</option>
-                    <option value="New York, NY">New York, NY</option>
-                    <option value="San Francisco, CA">San Francisco, CA</option>
-                    <option value="Austin, TX">Austin, TX</option>
-                    <option value="Remote">Remote</option>
-                    <option value="Seattle, WA">Seattle, WA</option>
+                    <option v-for="location in uniqueLocations" :key="location" :value="location">
+                        {{ location }}
+                    </option>
                 </select>
             </div>
 
@@ -91,16 +122,15 @@ const resetFilters = () => {
                         (e) =>
                             emit(
                                 'update:selectedJobType',
-                                (e.target as HTMLSelectElement).value,
+                                (e.target as HTMLSelectElement).value as JobType | '',
                             )
                     "
                     class="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 >
                     <option value="">All</option>
-                    <option value="Full Time">Full Time</option>
-                    <option value="Part Time">Part Time</option>
-                    <option value="Contract">Contract</option>
-                    <option value="Internship">Internship</option>
+                    <option v-for="type in jobTypes" :key="type" :value="type">
+                        {{ type }}
+                    </option>
                 </select>
             </div>
 
@@ -118,15 +148,15 @@ const resetFilters = () => {
                         (e) =>
                             emit(
                                 'update:selectedExperience',
-                                (e.target as HTMLSelectElement).value,
+                                (e.target as HTMLSelectElement).value as ExperienceLevel | '',
                             )
                     "
                     class="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 >
                     <option value="">All</option>
-                    <option value="Entry Level">Entry Level</option>
-                    <option value="Mid Level">Mid Level</option>
-                    <option value="Senior Level">Senior Level</option>
+                    <option v-for="level in experienceLevels" :key="level" :value="level">
+                        {{ level }}
+                    </option>
                 </select>
             </div>
 
