@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import BaseIcon from '@/components/shared/BaseIcon.vue'
 import BaseBadge from '@/components/shared/BaseBadge.vue'
 import BaseButton from '@/components/shared/BaseButton.vue'

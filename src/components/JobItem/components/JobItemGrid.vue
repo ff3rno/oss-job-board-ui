@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { JobPosting } from '../types'
+import type { JobPosting } from '@/types'
 import BaseJobCard from './BaseJobCard.vue'
 import BaseIcon from '@/components/shared/BaseIcon.vue'
 import BaseBadge from '@/components/shared/BaseBadge.vue'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import JobItem from '@/components/JobItem/JobItem.vue'
-import type { JobPosting } from '@/components/JobItem/types'
+import type { JobPosting } from '@/types'
 
 const props = defineProps<{
     jobs: JobPosting[]
