@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { ExperienceLevel, JobType } from '@/types/job'
 import BaseButton from '@/components/shared/BaseButton.vue'
+import Select from '@/components/shared/Select.vue'
 
 interface JobPosting {
     id: number
@@ -53,6 +54,27 @@ const uniqueLocations = computed(() => {
     return Array.from(locations).sort()
 })
 
+const locationOptions = computed(() => {
+    return uniqueLocations.value.map(location => ({
+        value: location,
+        label: location
+    }))
+})
+
+const jobTypeOptions = computed(() => {
+    return jobTypes.map(type => ({
+        value: type,
+        label: type
+    }))
+})
+
+const experienceLevelOptions = computed(() => {
+    return experienceLevels.map(level => ({
+        value: level,
+        label: level
+    }))
+})
+
 const resetFilters = () => {
     emit('update:searchTerm', '')
     emit('update:selectedLocation', '')
@@ -84,81 +106,36 @@ const resetFilters = () => {
             </div>
 
             <div class="mb-6">
-                <label
-                    for="location"
-                    class="block mb-2 text-gray-700 font-medium"
-                >
-                    Location:
-                </label>
-                <select
+                <Select
                     id="location"
-                    :value="selectedLocation"
-                    @change="
-                        (e) =>
-                            emit(
-                                'update:selectedLocation',
-                                (e.target as HTMLSelectElement).value,
-                            )
-                    "
-                    class="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                >
-                    <option value="">All</option>
-                    <option v-for="location in uniqueLocations" :key="location" :value="location">
-                        {{ location }}
-                    </option>
-                </select>
+                    :modelValue="selectedLocation"
+                    :options="locationOptions"
+                    label="Location:"
+                    placeholder="All"
+                    @update:modelValue="emit('update:selectedLocation', $event)"
+                />
             </div>
 
             <div class="mb-6">
-                <label
-                    for="jobType"
-                    class="block mb-2 text-gray-700 font-medium"
-                >
-                    Job Type:
-                </label>
-                <select
+                <Select
                     id="jobType"
-                    :value="selectedJobType"
-                    @change="
-                        (e) =>
-                            emit(
-                                'update:selectedJobType',
-                                (e.target as HTMLSelectElement).value as JobType | '',
-                            )
-                    "
-                    class="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                >
-                    <option value="">All</option>
-                    <option v-for="type in jobTypes" :key="type" :value="type">
-                        {{ type }}
-                    </option>
-                </select>
+                    :modelValue="selectedJobType"
+                    :options="jobTypeOptions"
+                    label="Job Type:"
+                    placeholder="All"
+                    @update:modelValue="emit('update:selectedJobType', $event as JobType)"
+                />
             </div>
 
             <div class="mb-6">
-                <label
-                    for="experience"
-                    class="block mb-2 text-gray-700 font-medium"
-                >
-                    Experience Level:
-                </label>
-                <select
+                <Select
                     id="experience"
-                    :value="selectedExperience"
-                    @change="
-                        (e) =>
-                            emit(
-                                'update:selectedExperience',
-                                (e.target as HTMLSelectElement).value as ExperienceLevel | '',
-                            )
-                    "
-                    class="w-full p-3 border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                >
-                    <option value="">All</option>
-                    <option v-for="level in experienceLevels" :key="level" :value="level">
-                        {{ level }}
-                    </option>
-                </select>
+                    :modelValue="selectedExperience"
+                    :options="experienceLevelOptions"
+                    label="Experience Level:"
+                    placeholder="All"
+                    @update:modelValue="emit('update:selectedExperience', $event as ExperienceLevel)"
+                />
             </div>
 
             <div class="mb-6">
@@ -195,15 +172,13 @@ const resetFilters = () => {
                 </div>
             </div>
 
-            <div>
-                <BaseButton
-                    variant="secondary"
-                    block
-                    @click="resetFilters"
-                >
-                    Reset Filters
-                </BaseButton>
-            </div>
+            <BaseButton
+                variant="secondary"
+                class="w-full"
+                @click="resetFilters"
+            >
+                Reset Filters
+            </BaseButton>
         </div>
     </aside>
 </template>

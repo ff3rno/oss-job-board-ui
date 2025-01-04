@@ -1,12 +1,29 @@
 <script setup lang="ts">
+import Select from '@/components/shared/Select.vue'
+
 const props = defineProps<{
     sortDirection: string
+    sortKey: string
     jobCount: number
 }>()
 
 defineEmits<{
     'update:sortDirection': [value: string]
+    'update:sortKey': [value: string]
 }>()
+
+const sortKeyOptions = [
+    { value: 'title', label: 'Title' },
+    { value: 'location', label: 'Location' },
+    { value: 'salary', label: 'Salary Range' },
+    { value: 'experienceLevel', label: 'Experience Level' },
+    { value: 'datePosted', label: 'Date Posted' }
+]
+
+const sortDirectionOptions = [
+    { value: 'asc', label: 'Ascending' },
+    { value: 'desc', label: 'Descending' }
+]
 </script>
 
 <template>
@@ -19,26 +36,19 @@ defineEmits<{
                 </p>
             </div>
             <div class="flex items-center gap-3">
-                <label
-                    for="sort"
-                    class="text-sm font-medium text-gray-700"
-                >
-                    Sort by:
-                </label>
-                <select
-                    id="sort"
-                    :value="sortDirection"
-                    @change="
-                        $emit(
-                            'update:sortDirection',
-                            ($event.target as HTMLSelectElement).value,
-                        )
-                    "
-                    class="px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                >
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
-                </select>
+                <Select
+                    id="sortKey"
+                    :modelValue="sortKey"
+                    :options="sortKeyOptions"
+                    label="Sort by"
+                    @update:modelValue="$emit('update:sortKey', $event)"
+                />
+                <Select
+                    id="sortDirection"
+                    :modelValue="sortDirection"
+                    :options="sortDirectionOptions"
+                    @update:modelValue="$emit('update:sortDirection', $event)"
+                />
             </div>
         </div>
         <div class="h-px bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 mt-6"></div>

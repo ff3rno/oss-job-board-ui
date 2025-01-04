@@ -35,7 +35,6 @@ const getCompanyLogoUrl = (company: string) => {
 
 <template>
     <div class="p-6 border border-gray-200 rounded-lg shadow-sm bg-white hover:shadow-md transition-shadow duration-200">
-        <!-- Header Section -->
         <div class="flex items-start gap-4 pb-4">
             <img
                 :src="getCompanyLogoUrl(job.company)"
@@ -59,7 +58,7 @@ const getCompanyLogoUrl = (company: string) => {
                 </div>
                 <div class="flex flex-wrap items-center gap-2 text-gray-600">
                     <div class="flex items-center gap-1.5">
-                        <BaseIcon name="location" />
+                        <BaseIcon name="world" />
                         <span>{{ job.location }}</span>
                     </div>
                     <span class="text-gray-300">•</span>
@@ -68,12 +67,10 @@ const getCompanyLogoUrl = (company: string) => {
             </div>
         </div>
 
-        <!-- Main Content Section -->
         <div class="mb-4">
             <p class="m-0 text-gray-600 line-clamp-2">{{ job.description }}</p>
         </div>
 
-        <!-- Footer Section -->
         <div class="flex items-center justify-between pt-4">
             <span class="text-sm text-gray-500">
                 Posted on: {{ job.datePosted }}

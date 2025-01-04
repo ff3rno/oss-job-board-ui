@@ -45,14 +45,14 @@ const generateJob = (id: number): JobPosting => {
         id,
         title: faker.person.jobTitle(),
         company: faker.company.name(),
-        location: `${faker.location.city()}, ${faker.location.state({ abbreviated: true })}`,
+        location: faker.location.country(),
         jobType: faker.helpers.arrayElement(jobTypes),
         description: faker.lorem.paragraphs(2),
         datePosted: faker.date.recent({ days: 30 }).toISOString().split('T')[0],
         salary: {
             min: minSalary,
             max: minSalary + faker.number.int({ min: 10000, max: 50000 }),
-            currency: 'USD'
+            currency: faker.helpers.arrayElement(['USD', 'EUR', 'GBP'])
         },
         experienceLevel: faker.helpers.arrayElement(experienceLevels),
         skills: faker.helpers.arrayElements(techSkills, { min: 3, max: 8 }),
@@ -72,9 +72,10 @@ const selectedExperience = ref<ExperienceLevel | ''>('')
 const minSalary = ref<number | null>(null)
 const maxSalary = ref<number | null>(null)
 const sortDirection = ref('asc')
+const sortKey = ref('datePosted')
 
 const filteredJobs = computed(() => {
-    let result = jobs.value.filter((job) => {
+    const result = jobs.value.filter((job) => {
         const matchesSearch = searchTerm.value === '' ||
             job.title.toLowerCase().includes(searchTerm.value.toLowerCase()) ||
             job.company.toLowerCase().includes(searchTerm.value.toLowerCase())
@@ -93,14 +94,6 @@ const filteredJobs = computed(() => {
             matchesExperience && meetsMinSalary && meetsMaxSalary
     })
 
-    result = result.sort((a, b) => {
-        if (sortDirection.value === 'asc') {
-            return a.datePosted.localeCompare(b.datePosted)
-        } else {
-            return b.datePosted.localeCompare(a.datePosted)
-        }
-    })
-
     return result
 })
 </script>
@@ -111,6 +104,7 @@ const filteredJobs = computed(() => {
             class="flex-1"
             :jobs="filteredJobs"
             v-model:sortDirection="sortDirection"
+            v-model:sortKey="sortKey"
         />
         <FilterSidebar
             class="w-full lg:w-80 lg:border-l lg:border-gray-200"
