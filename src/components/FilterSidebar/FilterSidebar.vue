@@ -31,7 +31,7 @@ const resetFilters = () => {
 </script>
 
 <template>
-    <aside :class="['border-l border-gray-200 bg-gray-50', props.class]">
+    <aside :class="[props.class]">
         <div class="p-6">
             <h2 class="mb-6 text-2xl font-semibold text-gray-800 border-b pb-2">
                 Filters

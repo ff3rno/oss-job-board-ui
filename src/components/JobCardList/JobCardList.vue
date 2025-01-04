@@ -26,7 +26,7 @@ const props = defineProps<{
             @update:sort-direction="$emit('update:sortDirection', $event)"
         />
 
-        <div class="flex flex-col gap-5 max-h-[80vh] overflow-y-auto px-2 pb-8">
+        <div class="flex flex-col gap-5 px-2 pb-8">
             <JobCard
                 v-for="job in jobs"
                 :key="job.id"

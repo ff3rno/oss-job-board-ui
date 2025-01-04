@@ -5,8 +5,3 @@
 body {
     font-family: 'Roboto', sans-serif;
 }
-
-html, body, #app {
-  height: 100%;
-  overflow-y: hidden;
-}

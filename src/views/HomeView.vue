@@ -98,14 +98,14 @@ const filteredJobs = computed(() => {
 </script>
 
 <template>
-    <div class="flex">
+    <div class="flex flex-col lg:flex-row gap-8">
         <JobCardList
-            class="pl-8"
+            class="flex-1"
             :jobs="filteredJobs"
             v-model:sortDirection="sortDirection"
         />
         <FilterSidebar
-            class="pr-8 w-80"
+            class="w-full lg:w-80 lg:border-l lg:border-gray-200"
             v-model:searchTerm="searchTerm"
             v-model:selectedLocation="selectedLocation"
             v-model:selectedJobType="selectedJobType"
