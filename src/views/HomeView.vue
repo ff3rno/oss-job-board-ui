@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue'
 import { faker } from '@faker-js/faker'
 import FilterSidebar from '@/components/FilterSidebar/FilterSidebar.vue'
-import JobCardList from '@/components/JobCardList/JobCardList.vue'
+import JobList from '@/components/JobList/JobList.vue'
 import { ExperienceLevel, JobType } from '@/types/job'
 
 const JOB_COUNT = 50
@@ -100,7 +100,7 @@ const filteredJobs = computed(() => {
 
 <template>
     <div class="flex flex-col lg:flex-row gap-8">
-        <JobCardList
+        <JobList
             class="flex-1"
             :jobs="filteredJobs"
             v-model:sortDirection="sortDirection"

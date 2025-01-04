@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import JobCardListHeader from './components/JobCardListHeader.vue'
-import JobCard from './components/JobCard.vue'
+import JobListHeader from './components/JobListHeader.vue'
+import JobItem from './components/JobItem.vue'
 import { JobType, ExperienceLevel } from '@/types/job'
 import { computed, ref } from 'vue'
+import { type LayoutType } from '@/components/shared/LayoutToggleGroup.vue'
 
 interface JobPosting {
     id: number
@@ -30,7 +31,7 @@ const props = defineProps<{
     class?: string
 }>()
 
-const layout = ref<'grid' | 'list'>('list')
+const layout = ref<LayoutType>('list')
 
 const sortedJobs = computed(() => {
     return [...props.jobs].sort((a, b) => {
@@ -68,7 +69,7 @@ defineEmits<{
 
 <template>
     <main :class="['flex-1', props.class]">
-        <JobCardListHeader
+        <JobListHeader
             :sort-direction="sortDirection"
             :sort-key="sortKey"
             :job-count="jobs.length"
@@ -81,13 +82,16 @@ defineEmits<{
         <div :class="[
             layout === 'grid'
                 ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
-                : 'flex flex-col gap-8',
-            'px-2 pb-8 max-w-4xl mx-auto lg:mx-0'
+                : layout === 'list'
+                    ? 'flex flex-col gap-4'
+                    : 'flex flex-col divide-y divide-gray-200 dark:divide-gray-700 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 shadow-sm',
+            'px-2 mb-8 max-w-4xl mx-auto lg:mx-0'
         ]">
-            <JobCard
+            <JobItem
                 v-for="job in sortedJobs"
                 :key="job.id"
                 :job="job"
+                :layout="layout"
                 :class="layout === 'grid' ? 'h-full' : ''"
             />
         </div>
