@@ -2,7 +2,7 @@
 import JobCardListHeader from './components/JobCardListHeader.vue'
 import JobCard from './components/JobCard.vue'
 import { JobType, ExperienceLevel } from '@/types/job'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 interface JobPosting {
     id: number
@@ -29,6 +29,8 @@ const props = defineProps<{
     sortKey: string
     class?: string
 }>()
+
+const layout = ref<'grid' | 'list'>('list')
 
 const sortedJobs = computed(() => {
     return [...props.jobs].sort((a, b) => {
@@ -65,20 +67,28 @@ defineEmits<{
 </script>
 
 <template>
-    <main :class="['flex-1 py-5', props.class]">
+    <main :class="['flex-1', props.class]">
         <JobCardListHeader
             :sort-direction="sortDirection"
             :sort-key="sortKey"
             :job-count="jobs.length"
+            :layout="layout"
             @update:sort-direction="$emit('update:sortDirection', $event)"
             @update:sort-key="$emit('update:sortKey', $event)"
+            @update:layout="layout = $event"
         />
 
-        <div class="flex flex-col gap-8 px-2 pb-8">
+        <div :class="[
+            layout === 'grid'
+                ? 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'
+                : 'flex flex-col gap-8',
+            'px-2 pb-8 max-w-4xl mx-auto lg:mx-0'
+        ]">
             <JobCard
                 v-for="job in sortedJobs"
                 :key="job.id"
                 :job="job"
+                :class="layout === 'grid' ? 'h-full' : ''"
             />
         </div>
     </main>

@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import BaseSelect from '@/components/shared/BaseSelect.vue'
+import BaseButton from '@/components/shared/BaseButton.vue'
+import BaseIcon from '@/components/shared/BaseIcon.vue'
 
 const props = defineProps<{
     sortDirection: string
     sortKey: string
     jobCount: number
+    layout: 'grid' | 'list'
 }>()
 
 defineEmits<{
     'update:sortDirection': [value: string]
     'update:sortKey': [value: string]
+    'update:layout': [value: 'grid' | 'list']
 }>()
 
 const sortKeyOptions = [
@@ -29,13 +33,21 @@ const sortDirectionOptions = [
 <template>
     <div class="mb-8">
         <div class="flex items-center justify-between">
-            <div class="space-y-1">
+            <div class="space-y-1 mt-4">
                 <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Postings</h1>
                 <p class="text-sm text-gray-600 dark:text-gray-400">
                     Showing {{ jobCount }} jobs
                 </p>
             </div>
-            <div class="flex items-center gap-3">
+            <div class="flex items-end gap-3">
+                <BaseButton
+                    variant="outline"
+                    size="sm"
+                    class="!p-2 mb-[1.75rem]"
+                    @click="$emit('update:layout', layout === 'grid' ? 'list' : 'grid')"
+                >
+                    <BaseIcon :name="layout === 'grid' ? 'list' : 'grid'" />
+                </BaseButton>
                 <BaseSelect
                     id="sortKey"
                     :modelValue="sortKey"
@@ -45,9 +57,9 @@ const sortDirectionOptions = [
                 />
                 <BaseSelect
                     id="sortDirection"
-                    select-class="mt-7"
                     :modelValue="sortDirection"
                     :options="sortDirectionOptions"
+                    class="self-end"
                     @update:modelValue="$emit('update:sortDirection', $event)"
                 />
             </div>

@@ -25,6 +25,7 @@ interface JobPosting {
 
 defineProps<{
     job: JobPosting
+    class?: string
 }>()
 
 // Generate a unique but consistent company logo placeholder based on company name
@@ -34,44 +35,45 @@ const getCompanyLogoUrl = (company: string) => {
 </script>
 
 <template>
-    <div class="p-4 sm:p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm bg-white dark:bg-gray-800 hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-gray-750 transition-all duration-200 ease-in-out cursor-pointer">
-        <div class="flex flex-col sm:flex-row items-start gap-4 pb-4">
-            <img
-                :src="getCompanyLogoUrl(job.company)"
-                :alt="`${job.company} logo`"
-                class="w-12 h-12 sm:w-16 sm:h-16 rounded-lg flex-shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600"
-            />
-            <div class="flex-grow min-w-0">
-                <div class="flex flex-col sm:flex-row justify-between items-start gap-4">
-                    <div>
-                        <h2 class="m-0 mb-1.5 text-lg sm:text-xl font-semibold text-gray-900 dark:text-white truncate">{{ job.title }}</h2>
-                        <h3 class="m-0 mb-2 text-base sm:text-lg font-medium text-indigo-600 dark:text-indigo-400">{{ job.company }}</h3>
-                    </div>
-                    <div class="flex flex-col gap-2 w-full sm:w-auto">
-                        <BaseBadge icon="money">
-                            {{ job.salary.currency }}{{ job.salary.min.toLocaleString() }} - {{ job.salary.max.toLocaleString() }}
-                        </BaseBadge>
-                        <BaseBadge icon="briefcase">
-                            {{ job.experienceLevel }}
-                        </BaseBadge>
-                    </div>
+    <div :class="[
+        'p-4 sm:p-6 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm bg-white dark:bg-gray-800 hover:shadow-md hover:scale-[1.02] hover:bg-gray-50 dark:hover:bg-gray-750 transition-all duration-200 ease-in-out cursor-pointer flex flex-col',
+        $props.class
+    ]">
+        <div class="flex flex-col gap-4 pb-4">
+            <div class="flex items-start gap-4">
+                <img
+                    :src="getCompanyLogoUrl(job.company)"
+                    :alt="`${job.company} logo`"
+                    class="w-12 h-12 rounded-lg flex-shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600"
+                />
+                <div class="min-w-0 flex-1">
+                    <h2 class="m-0 mb-1 text-lg font-semibold text-gray-900 dark:text-white truncate">{{ job.title }}</h2>
+                    <h3 class="m-0 text-base font-medium text-indigo-600 dark:text-indigo-400 truncate">{{ job.company }}</h3>
                 </div>
-                <div class="flex flex-wrap items-center gap-2 text-gray-600 dark:text-gray-400 mt-2 sm:mt-0">
-                    <div class="flex items-center gap-1.5">
-                        <BaseIcon name="world" />
-                        <span>{{ job.location }}</span>
-                    </div>
-                    <span class="text-gray-300 dark:text-gray-600">•</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+                <div class="flex items-center gap-1.5 text-gray-600 dark:text-gray-400 text-sm">
+                    <BaseIcon name="world" />
+                    <span class="truncate">{{ job.location }}</span>
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                    <BaseBadge icon="briefcase">
+                        {{ job.experienceLevel }}
+                    </BaseBadge>
                     <BaseBadge variant="pill">{{ job.jobType }}</BaseBadge>
                 </div>
+                <BaseBadge icon="money" class="sm:ml-auto truncate">
+                    {{ job.salary.currency }}{{ job.salary.min.toLocaleString() }} - {{ job.salary.max.toLocaleString() }}
+                </BaseBadge>
             </div>
         </div>
 
-        <div class="mb-4">
-            <p class="m-0 text-gray-600 dark:text-gray-400 line-clamp-2">{{ job.description }}</p>
+        <div class="mb-4 flex-grow">
+            <p class="m-0 text-gray-600 dark:text-gray-400 line-clamp-3">{{ job.description }}</p>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-gray-100 dark:border-gray-700 mt-auto">
             <span class="text-sm text-gray-500 dark:text-gray-400 order-2 sm:order-1">
                 Posted on: {{ job.datePosted }}
             </span>
