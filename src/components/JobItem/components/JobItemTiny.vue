@@ -8,13 +8,23 @@ const props = defineProps<{
   job: JobPosting
   class?: string
   onClick?: () => void
+  isHighlighted?: boolean
 }>()
 </script>
 
 <template>
   <BaseJobCard
-    :class="props.class"
-    class="p-3 h-[140px] group hover:border-indigo-200 dark:hover:border-indigo-800 transition-colors"
+    :class="
+      [
+        props.class,
+        'p-3 h-[140px] group transition-colors relative',
+        isHighlighted
+          ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800'
+          : 'hover:border-indigo-200 dark:hover:border-indigo-800',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    "
     :onClick="onClick"
   >
     <div class="flex items-start gap-3 h-[52px]">
@@ -23,7 +33,7 @@ const props = defineProps<{
         :alt="`${job.company} logo`"
         class="w-10 h-10 rounded-lg flex-shrink-0 bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600 group-hover:border-indigo-200 dark:group-hover:border-indigo-800 transition-colors"
       />
-      <div class="min-w-0 flex-1">
+      <div class="min-w-0 flex-1 pr-[4.5rem]">
         <h2
           class="m-0 mb-0.5 text-base font-semibold text-gray-900 dark:text-white truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors"
         >
@@ -34,6 +44,16 @@ const props = defineProps<{
         >
           {{ job.company }}
         </h3>
+      </div>
+      <div
+        v-if="isHighlighted"
+        class="absolute right-3 top-3"
+      >
+        <BaseBadge
+          class="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100 border-amber-200 dark:border-amber-700 text-xs"
+        >
+          New
+        </BaseBadge>
       </div>
     </div>
 

@@ -137,11 +137,11 @@ const featuredJobsList = computed(() =>
 const route = useRoute()
 
 const addRelatedJobIds = () => {
-  jobs.value = jobs.value.map(job => {
-    const otherJobs = jobs.value.filter(j => j.id !== job.id)
+  jobs.value = jobs.value.map((job) => {
+    const otherJobs = jobs.value.filter((j) => j.id !== job.id)
     const relatedJobIds = faker.helpers.arrayElements(
-      otherJobs.map(j => j.id),
-      { min: 3, max: 5 }
+      otherJobs.map((j) => j.id),
+      { min: 3, max: 5 },
     )
     return { ...job, relatedJobIds }
   })

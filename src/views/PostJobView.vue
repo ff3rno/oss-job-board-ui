@@ -378,7 +378,9 @@ const currencyOptions = [
                 name="preview"
                 class="w-5 h-5"
               />
-              <span>Complete the required fields to see your job posting preview</span>
+              <span>
+                Complete the required fields to see your job posting preview
+              </span>
             </div>
           </div>
         </div>

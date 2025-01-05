@@ -2,6 +2,7 @@
 import type { JobPosting } from '@/types'
 import JobItemTiny from '../JobItem/components/JobItemTiny.vue'
 import { useRouter } from 'vue-router'
+import { computed } from 'vue'
 
 const props = defineProps<{
   jobs: JobPosting[]
@@ -13,10 +14,12 @@ const handleJobClick = (job: JobPosting) => {
   router.push({
     name: 'job-details',
     params: {
-      job: encodeURIComponent(JSON.stringify(job))
-    }
+      job: encodeURIComponent(JSON.stringify(job)),
+    },
   })
 }
+
+const isHighlighted = computed(() => Math.random() < 0.5)
 </script>
 
 <template>
@@ -31,6 +34,7 @@ const handleJobClick = (job: JobPosting) => {
         :job="job"
         class="w-full"
         :onClick="() => handleJobClick(job)"
+        :is-highlighted="isHighlighted"
       />
     </div>
   </div>

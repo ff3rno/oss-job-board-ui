@@ -34,6 +34,18 @@ export interface JobPosting {
   benefits: string[]
   featuredAt?: number
   relatedJobIds: number[]
+  companyWebsite?: string
+  companyDescription?: string
+  jobDetails?: {
+    responsibilities?: string[]
+    requirements?: string[]
+    whatWeOffer?: string[]
+    applicationMethod?: string
+  }
+  tags?: string[]
+  viewCount?: number
+  applicationCount?: number
+  applicationUrl?: string
 }
 
 export type NavigationLink = {

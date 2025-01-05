@@ -9,17 +9,27 @@ const props = defineProps<{
   job: JobPosting
   class?: string
   onClick?: () => void
+  isHighlighted?: boolean
 }>()
 </script>
 
 <template>
   <BaseJobCard
-    :class="props.class"
-    class="p-4 sm:p-6 flex flex-col"
+    :class="
+      [
+        props.class,
+        'p-4 sm:p-6 flex flex-col relative',
+        isHighlighted
+          ? 'bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800'
+          : 'hover:border-indigo-200 dark:hover:border-indigo-800',
+      ]
+        .filter(Boolean)
+        .join(' ')
+    "
     :onClick="onClick"
   >
     <div class="flex flex-col gap-4 pb-4">
-      <div class="flex items-start gap-4">
+      <div class="flex items-start gap-4 pr-[4.5rem]">
         <img
           :src="job.companyLogo"
           :alt="`${job.company} logo`"
@@ -36,6 +46,16 @@ const props = defineProps<{
           >
             {{ job.company }}
           </h3>
+        </div>
+        <div
+          v-if="isHighlighted"
+          class="absolute right-4 sm:right-6 top-4 sm:top-6"
+        >
+          <BaseBadge
+            class="bg-amber-100 dark:bg-amber-900 text-amber-800 dark:text-amber-100 border-amber-200 dark:border-amber-700"
+          >
+            New
+          </BaseBadge>
         </div>
       </div>
 

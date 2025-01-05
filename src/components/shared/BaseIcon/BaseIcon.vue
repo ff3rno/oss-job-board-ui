@@ -15,6 +15,9 @@ import SpinnerIcon from '@/components/shared/BaseIcon/components/SpinnerIcon.vue
 import CheckCircleIcon from '@/components/shared/BaseIcon/components/CheckCircleIcon.vue'
 import ArrowDownCircleIcon from '@/components/shared/BaseIcon/components/ArrowDownCircleIcon.vue'
 import PreviewIcon from '@/components/shared/BaseIcon/components/PreviewIcon.vue'
+import ExternalLinkIcon from '@/components/shared/BaseIcon/components/ExternalLinkIcon.vue'
+import EyeIcon from '@/components/shared/BaseIcon/components/EyeIcon.vue'
+import UsersIcon from '@/components/shared/BaseIcon/components/UsersIcon.vue'
 
 export type IconName =
   | 'money'
@@ -32,6 +35,9 @@ export type IconName =
   | 'check-circle'
   | 'arrow-down-circle'
   | 'preview'
+  | 'external-link'
+  | 'eye'
+  | 'users'
 
 const props = defineProps<{
   name: IconName
@@ -54,6 +60,9 @@ const icons: Record<IconName, Component> = {
   'check-circle': CheckCircleIcon,
   'arrow-down-circle': ArrowDownCircleIcon,
   preview: PreviewIcon,
+  'external-link': ExternalLinkIcon,
+  eye: EyeIcon,
+  users: UsersIcon,
 }
 </script>
 

@@ -17,8 +17,12 @@ const job = computed(() =>
 
 const relatedJobs = computed(() => {
   if (!job.value) return []
-  const allJobs = JSON.parse(localStorage.getItem('jobs') || '[]') as JobPosting[]
-  return allJobs.filter(j => job.value?.relatedJobIds.includes(j.id)).slice(0, 3)
+  const allJobs = JSON.parse(
+    localStorage.getItem('jobs') || '[]',
+  ) as JobPosting[]
+  return allJobs
+    .filter((j) => job.value?.relatedJobIds.includes(j.id))
+    .slice(0, 3)
 })
 
 const handleBack = () => {

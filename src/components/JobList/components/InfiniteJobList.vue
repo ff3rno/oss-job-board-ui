@@ -28,13 +28,17 @@ const loadMoreJobs = async () => {
 
   isLoading.value = true
   // Simulate network delay
-  await new Promise(resolve => setTimeout(resolve, Math.random() * 1000 + 500))
+  await new Promise((resolve) =>
+    setTimeout(resolve, Math.random() * 1000 + 500),
+  )
   currentPage.value++
   isLoading.value = false
 }
 
 const handleScroll = () => {
-  const bottomOfWindow = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
+  const bottomOfWindow =
+    Math.ceil(window.innerHeight + window.scrollY) >=
+    document.documentElement.scrollHeight
 
   if (bottomOfWindow) {
     loadMoreJobs()
@@ -97,7 +101,9 @@ onUnmounted(() => {
       v-else-if="visibleJobs.length > 0"
       class="flex justify-center py-4"
     >
-      <span class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+      <span
+        class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400"
+      >
         <BaseIcon
           name="check-circle"
           class="w-5 h-5"

@@ -83,6 +83,9 @@ const resetFilters = () => {
             (value: string) => emit('update:searchTerm', value)
           "
         />
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          Search by job title, company, or keywords
+        </p>
       </div>
 
       <div class="mb-6">
@@ -97,6 +100,9 @@ const resetFilters = () => {
             labelClass="min-w-[120px] dark:text-gray-300"
             @update:modelValue="emit('update:selectedLocation', $event)"
           />
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Filter jobs by city or remote work options
+          </p>
         </div>
       </div>
 
@@ -114,6 +120,10 @@ const resetFilters = () => {
               emit('update:selectedJobType', $event as JobType)
             "
           />
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Choose between full-time, part-time, contract, or internship
+            positions
+          </p>
         </div>
       </div>
 
@@ -131,6 +141,9 @@ const resetFilters = () => {
               emit('update:selectedExperience', $event as ExperienceLevel)
             "
           />
+          <p class="text-xs text-gray-500 dark:text-gray-400">
+            Select your experience level to find matching opportunities
+          </p>
         </div>
       </div>
 
@@ -162,6 +175,9 @@ const resetFilters = () => {
             "
           />
         </div>
+        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+          Enter annual salary range in USD (optional)
+        </p>
       </div>
 
       <BaseButton

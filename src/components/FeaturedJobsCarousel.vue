@@ -34,14 +34,21 @@ const visibleJobs = computed(() => {
   // Generate three sets of jobs: main set, left clone, and right clone
   for (const offset of [-1, 0, 1]) {
     props.jobs.forEach((job, index) => {
-      const position = wrapPosition(index * jobWidth - scrollPosition.value + offset * totalWidth.value)
+      const position = wrapPosition(
+        index * jobWidth - scrollPosition.value + offset * totalWidth.value,
+      )
 
       // Only add if within the visible range (including buffer)
       if (position >= -buffer && position <= containerWidth.value + buffer) {
         positions.push({
           job,
           position,
-          opacity: Math.max(0, 1 - Math.abs(position - containerWidth.value / 2) / (containerWidth.value / 2))
+          opacity: Math.max(
+            0,
+            1 -
+              Math.abs(position - containerWidth.value / 2) /
+                (containerWidth.value / 2),
+          ),
         })
       }
     })
@@ -133,7 +140,9 @@ onUnmounted(() => {
 
 <template>
   <div :class="['space-y-4', props.class]">
-    <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">{{ props.title }}</h2>
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-white">
+      {{ props.title }}
+    </h2>
     <div
       ref="carouselContainer"
       class="relative overflow-hidden h-[160px] w-full cursor-grab active:cursor-grabbing"
@@ -142,10 +151,14 @@ onUnmounted(() => {
       @pointerdown="onPointerDown"
     >
       <!-- Left fade -->
-      <div class="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10"></div>
+      <div
+        class="absolute left-0 top-0 bottom-0 w-10 bg-gradient-to-l from-white dark:from-gray-900 to-transparent z-10"
+      ></div>
 
       <!-- Right fade -->
-      <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-r from-transparent via-white/80 to-white dark:via-gray-900/80 dark:to-gray-900 z-10"></div>
+      <div
+        class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-r from-transparent via-white/80 to-white dark:via-gray-900/80 dark:to-gray-900 z-10"
+      ></div>
 
       <div class="relative h-full w-full select-none">
         <div
