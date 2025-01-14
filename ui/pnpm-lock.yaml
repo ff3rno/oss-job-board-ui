@@ -20,6 +20,9 @@ importers:
       vue:
         specifier: ^3.4.15
         version: 3.5.13(typescript@5.3.3)
+      vue-avatar:
+        specifier: ^2.3.3
+        version: 2.3.3
       vue-router:
         specifier: ^4.2.5
         version: 4.5.0(vue@3.5.13(typescript@5.3.3))
@@ -2214,6 +2217,10 @@ packages:
         optional: true
       jsdom:
         optional: true
+
+  vue-avatar@2.3.3:
+    resolution: {integrity: sha512-Z57ILRTkFIAuCH9JiFBxX74C5zua5ub/jRDM/KZ+QKXNfscvmUOgWBs3kA2+wrpZMowIvfLHIT0gvQu1z+zpLg==}
+    engines: {node: '>= 4.0.0', npm: '>= 3.0.0'}
 
   vue-component-type-helpers@2.2.0:
     resolution: {integrity: sha512-cYrAnv2me7bPDcg9kIcGwjJiSB6Qyi08+jLDo9yuvoFQjzHiPTzML7RnkJB1+3P6KMsX/KbCD4QE3Tv/knEllw==}
@@ -4514,6 +4521,8 @@ snapshots:
       - sugarss
       - supports-color
       - terser
+
+  vue-avatar@2.3.3: {}
 
   vue-component-type-helpers@2.2.0: {}
 

@@ -8,9 +8,9 @@ import { JobType, ExperienceLevel, type JobPosting } from '@/types'
 const props = defineProps<{
   jobs: JobPosting[]
   searchTerm: string
-  selectedLocation: string
-  selectedJobType: string
-  selectedExperience: ExperienceLevel | ''
+  location: string
+  jobType: string
+  experienceLevel: string
   minSalary: number | null
   maxSalary: number | null
   class?: string
@@ -18,9 +18,9 @@ const props = defineProps<{
 
 type Emits = {
   (e: 'update:searchTerm', value: string): void
-  (e: 'update:selectedLocation', value: string): void
-  (e: 'update:selectedJobType', value: JobType | ''): void
-  (e: 'update:selectedExperience', value: ExperienceLevel | ''): void
+  (e: 'update:location', value: string): void
+  (e: 'update:jobType', value: JobType | ''): void
+  (e: 'update:experienceLevel', value: ExperienceLevel | ''): void
   (e: 'update:minSalary', value: number | null): void
   (e: 'update:maxSalary', value: number | null): void
   (e: 'resetFilters'): void
@@ -59,9 +59,9 @@ const experienceLevelOptions = computed(() => {
 
 const resetFilters = () => {
   emit('update:searchTerm', '')
-  emit('update:selectedLocation', '')
-  emit('update:selectedJobType', '')
-  emit('update:selectedExperience', '')
+  emit('update:location', '')
+  emit('update:jobType', '')
+  emit('update:experienceLevel', '')
   emit('update:minSalary', null)
   emit('update:maxSalary', null)
   emit('resetFilters')
@@ -92,13 +92,13 @@ const resetFilters = () => {
         <div class="flex flex-col gap-2">
           <BaseSelect
             id="location"
-            :modelValue="selectedLocation"
+            :modelValue="location"
             :options="locationOptions"
             label="Location:"
             placeholder="All"
             class="w-full"
             labelClass="min-w-[120px] dark:text-gray-300"
-            @update:modelValue="emit('update:selectedLocation', $event)"
+            @update:modelValue="emit('update:location', $event)"
           />
           <p class="text-xs text-gray-500 dark:text-gray-400">
             Filter jobs by city or remote work options
@@ -110,14 +110,14 @@ const resetFilters = () => {
         <div class="flex flex-col gap-2">
           <BaseSelect
             id="jobType"
-            :modelValue="selectedJobType"
+            :modelValue="jobType"
             :options="jobTypeOptions"
             label="Job Type:"
             placeholder="All"
             class="w-full"
             labelClass="min-w-[120px] dark:text-gray-300"
             @update:modelValue="
-              emit('update:selectedJobType', $event as JobType)
+              emit('update:jobType', $event as JobType)
             "
           />
           <p class="text-xs text-gray-500 dark:text-gray-400">
@@ -131,14 +131,14 @@ const resetFilters = () => {
         <div class="flex flex-col gap-2">
           <BaseSelect
             id="experience"
-            :modelValue="selectedExperience"
+            :modelValue="experienceLevel"
             :options="experienceLevelOptions"
             label="Experience Level:"
             placeholder="All"
             class="w-full"
             labelClass="min-w-[120px] dark:text-gray-300"
             @update:modelValue="
-              emit('update:selectedExperience', $event as ExperienceLevel)
+              emit('update:experienceLevel', $event as ExperienceLevel)
             "
           />
           <p class="text-xs text-gray-500 dark:text-gray-400">

@@ -1,12 +1,22 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import type { NavigationLink } from '@/types'
+
+type NavigationLink = {
+  name: string
+  path: string
+  component: () => Promise<any>
+}
 
 export const navigationLinks: NavigationLink[] = [
   {
-    name: 'Browse Jobs',
+    name: 'Home',
     path: '/',
     component: () => Promise.resolve(HomeView),
+  },
+  {
+    name: 'Browse Jobs',
+    path: '/browse-jobs',
+    component: () => import('../views/BrowseView.vue'),
   },
   {
     name: 'Post a Job',
@@ -31,6 +41,16 @@ const additionalRoutes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+    {
+      path: '/',
+      component: () => import('@/views/HomeView.vue'),
+      name: 'home'
+    },
+    {
+      path: '/browse-jobs',
+      component: () => import('@/views/BrowseView.vue'),
+      name: 'browse-jobs'
+    },
     ...navigationLinks.map((link) => ({
       path: link.path,
       name: link.path === '/' ? 'home' : link.path.slice(1).replace('/', '-'),

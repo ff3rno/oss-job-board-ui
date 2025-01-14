@@ -11,6 +11,7 @@ const props = defineProps<{
   sortDirection: string
   sortKey: string
   layout: LayoutType
+  title?: string
   class?: string
 }>()
 
@@ -36,7 +37,7 @@ defineEmits<{
 
 const containerClasses = computed(() =>
   clsx(
-    'flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-2',
+    'flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-2',
     props.class,
   ),
 )
@@ -44,6 +45,15 @@ const containerClasses = computed(() =>
 
 <template>
   <div :class="containerClasses">
+    <h2 v-if="title" class="text-2xl font-semibold text-gray-900 dark:text-gray-300 mb-4 sm:mb-0 shrink">{{ title }}</h2>
+
+    <LayoutToggleGroup
+      :model-value="layout"
+      :options="layoutOptions"
+      @update:model-value="$emit('update:layout', $event)"
+      class="grow"
+    />
+
     <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
       <BaseSelect
         :model-value="sortKey"
@@ -62,11 +72,5 @@ const containerClasses = computed(() =>
         @update:model-value="$emit('update:sortDirection', $event)"
       />
     </div>
-
-    <LayoutToggleGroup
-      :model-value="layout"
-      :options="layoutOptions"
-      @update:model-value="$emit('update:layout', $event)"
-    />
   </div>
 </template>

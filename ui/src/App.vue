@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
 import { onMounted } from 'vue'
+import { RouterView } from 'vue-router'
 import { useThemeStore } from '@/stores/theme'
 import PageHeader from '@/components/PageHeader.vue'
 import PageFooter from '@/components/PageFooter.vue'

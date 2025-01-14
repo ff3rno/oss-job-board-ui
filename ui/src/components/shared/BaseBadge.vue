@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { clsx } from 'clsx'
 import BaseIcon from '@/components/shared/BaseIcon/BaseIcon.vue'
 import type { IconName } from '@/components/shared/BaseIcon/BaseIcon.vue'
 
@@ -11,13 +12,13 @@ const props = defineProps<{
 
 <template>
   <div
-    :class="[
+    :class="clsx(
       'flex items-center gap-2 px-3 py-1.5 rounded-lg whitespace-nowrap',
       variant === 'pill'
         ? 'rounded-full bg-indigo-50 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300'
         : 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300',
-      props.class,
-    ]"
+      props.class
+    )"
   >
     <BaseIcon
       v-if="icon"
