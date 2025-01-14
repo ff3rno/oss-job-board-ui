@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { computed } from 'vue'
 import type { JobPosting } from '@/types'
 import JobItem from '@/components/JobItem/JobItem.vue'
 import BaseIcon from '@/components/shared/BaseIcon/BaseIcon.vue'
@@ -8,50 +8,20 @@ import { type LayoutType } from '@/components/shared/LayoutToggleGroup.vue'
 const props = defineProps<{
   jobs: JobPosting[]
   layout: LayoutType
-  pageSize: number
+  hasMore?: boolean
+  isLoading?: boolean
   class?: string
 }>()
 
-const currentPage = ref(1)
-const isLoading = ref(false)
+const emit = defineEmits<{
+  loadMore: []
+}>()
 
-const visibleJobs = computed(() => {
-  return props.jobs.slice(0, currentPage.value * props.pageSize)
-})
-
-const hasMoreJobs = computed(() => {
-  return visibleJobs.value.length < props.jobs.length
-})
-
-const loadMoreJobs = async () => {
-  if (isLoading.value || !hasMoreJobs.value) return
-
-  isLoading.value = true
-  // Simulate network delay
-  await new Promise((resolve) =>
-    setTimeout(resolve, Math.random() * 1000 + 500),
-  )
-  currentPage.value++
-  isLoading.value = false
-}
-
-const handleScroll = () => {
-  const bottomOfWindow =
-    Math.ceil(window.innerHeight + window.scrollY) >=
-    document.documentElement.scrollHeight
-
-  if (bottomOfWindow) {
-    loadMoreJobs()
+const handleLoadMore = () => {
+  if (!props.isLoading && props.hasMore) {
+    emit('loadMore')
   }
 }
-
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll)
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
 </script>
 
 <template>
@@ -67,7 +37,7 @@ onUnmounted(() => {
       ]"
     >
       <JobItem
-        v-for="job in visibleJobs"
+        v-for="job in jobs"
         :key="job.id"
         :job="job"
         :layout="layout"
@@ -76,11 +46,11 @@ onUnmounted(() => {
     </div>
 
     <div
-      v-if="hasMoreJobs"
+      v-if="hasMore"
       class="flex justify-center py-4"
     >
       <button
-        @click="loadMoreJobs"
+        @click="handleLoadMore"
         class="flex items-center gap-2 px-4 py-2 text-sm font-medium text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300"
         :disabled="isLoading"
       >
@@ -98,7 +68,7 @@ onUnmounted(() => {
       </button>
     </div>
     <div
-      v-else-if="visibleJobs.length > 0"
+      v-else-if="jobs.length > 0"
       class="flex justify-center py-4"
     >
       <span

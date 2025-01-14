@@ -10,6 +10,14 @@ const props = defineProps<{
   sortDirection: string
   sortKey: string
   class?: string
+  hasMore?: boolean
+  isLoading?: boolean
+}>()
+
+const emit = defineEmits<{
+  'update:sortDirection': [value: string]
+  'update:sortKey': [value: string]
+  loadMore: []
 }>()
 
 const layout = ref<LayoutType>('list')
@@ -43,11 +51,6 @@ const sortedJobs = computed(() => {
     return props.sortDirection === 'asc' ? compareResult : -compareResult
   })
 })
-
-defineEmits<{
-  'update:sortDirection': [value: string]
-  'update:sortKey': [value: string]
-}>()
 </script>
 
 <template>
@@ -65,8 +68,10 @@ defineEmits<{
     <InfiniteJobList
       :jobs="sortedJobs"
       :layout="layout"
-      :page-size="10"
+      :has-more="hasMore"
+      :is-loading="isLoading"
       class="mt-6 relative z-20"
+      @load-more="$emit('loadMore')"
     />
   </main>
 </template>
